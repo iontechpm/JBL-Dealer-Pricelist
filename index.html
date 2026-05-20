@@ -2158,8 +2158,9 @@
 
     function documentActions(product) {
       const supplementalLabel = supplementalDocuments[product.id];
+      const supplementalHref = `${product.id}-manuals.pdf`;
       const supplemental = supplementalLabel
-        ? `<a class="doc-button secondary" href="${assetPath(`assets/manuals/${product.id}.pdf`)}" target="_blank" rel="noreferrer">${supplementalLabel}</a>`
+        ? `<a class="doc-button secondary" href="${supplementalHref}" target="_blank" rel="noreferrer">${supplementalLabel}</a>`
         : "";
 
       return `
