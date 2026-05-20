@@ -1,0 +1,2410 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JBL Product Pricelist</title>
+  <link rel="icon" type="image/png" href="site-icon.png">
+  <link rel="apple-touch-icon" href="site-icon.png">
+  <style>
+    @font-face {
+      font-family: "Roc Grotesk Black";
+      src: url("roc-grotesk-black.otf") format("opentype");
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Roc Grotesk Light";
+      src: url("roc-grotesk-light.otf") format("opentype");
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --jbl-orange: #ff671f;
+      --dealer-orange: rgb(250, 70, 22);
+      --ink: #111111;
+      --soft-ink: #555555;
+      --line: #dedede;
+      --panel: #ffffff;
+      --canvas: #f4f4f2;
+      --warm: #fff2eb;
+      --good: #14823b;
+      font-size: 80%;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--canvas);
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(244, 244, 242, .94);
+      backdrop-filter: blur(12px);
+    }
+
+    .bar {
+      width: min(1320px, calc(100% - 32px));
+      margin: 0 auto;
+      min-height: 108px;
+      padding: 14px 0;
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand img {
+      width: 107px;
+      height: auto;
+      display: block;
+    }
+
+    .home-link {
+      display: block;
+      flex: 0 0 auto;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-family: "Roc Grotesk Black", Arial, Helvetica, sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      display: block;
+      margin-top: 4px;
+      color: var(--soft-ink);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .tabs {
+      justify-self: center;
+      display: flex;
+      gap: 6px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      min-height: 50px;
+      align-items: stretch;
+    }
+
+    .tab {
+      min-width: 104px;
+      min-height: 38px;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      padding: 8px 12px;
+      color: var(--soft-ink);
+      font: 800 12px/1 Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .tab[aria-selected="true"] {
+      background: var(--jbl-orange);
+      color: white;
+    }
+
+    .utility-tabs {
+      justify-self: end;
+      display: flex;
+      gap: 6px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      min-height: 50px;
+      align-items: stretch;
+    }
+
+    .utility-tab {
+      min-width: 142px;
+      min-height: 38px;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      padding: 8px 12px;
+      color: var(--soft-ink);
+      font: 800 12px/1 Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .utility-tab[aria-selected="true"] {
+      background: var(--ink);
+      color: white;
+    }
+
+    .search {
+      width: min(280px, 30vw);
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .search span {
+      color: var(--soft-ink);
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .search input {
+      width: 100%;
+      height: 34px;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--ink);
+      font: 700 14px/1 Arial, Helvetica, sans-serif;
+    }
+
+    main {
+      width: min(1320px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 19px 0 38px;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 16px;
+      margin: 8px 0 22px;
+    }
+
+    .summary h2 {
+      margin: 0;
+      font-family: "Roc Grotesk Black", Arial, Helvetica, sans-serif;
+      font-size: clamp(26px, 4vw, 51px);
+      font-weight: 900;
+      line-height: .94;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .summary p {
+      margin: 8px 0 0;
+      max-width: 680px;
+      color: var(--soft-ink);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .count {
+      padding: 10px 11px;
+      background: var(--ink);
+      color: white;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 11px;
+    }
+
+    .card {
+      min-height: 310px;
+      display: grid;
+      grid-template-rows: 168px 1fr;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 14px 34px rgba(17, 17, 17, .13);
+      overflow: hidden;
+    }
+
+    .card-link {
+      display: grid;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .media {
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      background: linear-gradient(180deg, #ffffff 0%, #f2f2f0 100%);
+    }
+
+    .media img {
+      max-width: 100%;
+      max-height: 144px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+
+    .copy {
+      display: grid;
+      grid-template-rows: auto auto;
+      gap: 8px;
+      padding: 14px;
+    }
+
+    .name {
+      margin: 0;
+      font-family: "Roc Grotesk Black", Arial, Helvetica, sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .name-link {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .name-link:hover {
+      color: var(--dealer-orange);
+    }
+
+    .description {
+      min-height: 35px;
+      margin: 5px 0 2px;
+      color: #787878;
+      font-family: "Roc Grotesk Light", Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      line-height: 1.28;
+    }
+
+    .prices {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 7px;
+    }
+
+    .price {
+      display: grid;
+      grid-template-columns: 35px 1fr;
+      align-items: baseline;
+      column-gap: 12px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+    }
+
+    .price b {
+      display: block;
+      margin-bottom: 0;
+      color: var(--soft-ink);
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .price span {
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .price.dealer span { color: var(--dealer-orange); }
+
+    .empty {
+      display: none;
+      padding: 48px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      text-align: center;
+    }
+
+    .empty.is-visible { display: block; }
+
+    .empty h3 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      text-transform: uppercase;
+    }
+
+    .empty p {
+      margin: 0 auto;
+      max-width: 560px;
+      color: var(--soft-ink);
+      line-height: 1.5;
+    }
+
+    .detail {
+      display: none;
+    }
+
+    .detail.is-visible {
+      display: block;
+    }
+
+    .detail-back {
+      border: 0;
+      margin: 0 0 18px;
+      padding: 0;
+      background: transparent;
+      color: var(--soft-ink);
+      font: 800 13px/1 Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .detail-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(320px, .8fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .detail-media {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 14px 34px rgba(17, 17, 17, .13);
+      overflow: hidden;
+    }
+
+    .gallery-layout {
+      display: grid;
+      grid-template-columns: 69px minmax(0, 1fr);
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .color-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .color-option {
+      min-height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--soft-ink);
+      font: 900 10px/1 Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(17, 17, 17, .06);
+    }
+
+    .color-option[aria-selected="true"] {
+      border-color: var(--dealer-orange);
+      background: var(--dealer-orange);
+      color: white;
+    }
+
+    .main-photo {
+      display: grid;
+      place-items: center;
+      min-height: 416px;
+      padding: 22px;
+      background: #edf1f2;
+    }
+
+    .main-photo img {
+      max-width: 100%;
+      max-height: 376px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+
+    .thumbs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 12px;
+      border-top: 1px solid var(--line);
+      background: #ffffff;
+    }
+
+    .thumb {
+      flex: 0 0 61px;
+      height: 51px;
+      border: 1px solid var(--line);
+      border-bottom: 4px solid transparent;
+      background: #f6f6f6;
+      cursor: pointer;
+    }
+
+    .thumb[aria-selected="true"] {
+      border-bottom-color: var(--dealer-orange);
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+
+    .detail-copy {
+      display: grid;
+      gap: 18px;
+    }
+
+    .detail-copy h2 {
+      margin: 0;
+      font-family: "Roc Grotesk Black", Arial, Helvetica, sans-serif;
+      font-size: clamp(29px, 4vw, 58px);
+      font-weight: 900;
+      line-height: .9;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .detail-copy .description {
+      min-height: 0;
+      max-width: 560px;
+      margin: 0;
+      font-size: 13px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 10px 24px rgba(17, 17, 17, .08);
+      padding: 16px;
+    }
+
+    .panel h3 {
+      margin: 0 0 12px;
+      font-family: "Roc Grotesk Black", Arial, Helvetica, sans-serif;
+      font-size: 18px;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .feature-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--soft-ink);
+      line-height: 1.45;
+    }
+
+    .feature-list li + li {
+      margin-top: 8px;
+    }
+
+    .specs {
+      margin-top: 28px;
+    }
+
+    .commerce-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .commerce-item {
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    .commerce-item b,
+    .wide-spec b {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--soft-ink);
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .commerce-item span {
+      font-weight: 900;
+    }
+
+    .wide-spec {
+      margin-top: 10px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    .wide-spec p {
+      margin: 0;
+      color: var(--ink);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .tech-list,
+    .box-list {
+      margin: 0;
+      padding-left: 18px;
+      columns: 2;
+      column-gap: 28px;
+      color: var(--ink);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .tech-list li,
+    .box-list li {
+      break-inside: avoid;
+      margin: 0 0 4px;
+    }
+
+    .tech-list .spec-subcategory {
+      list-style: none;
+      margin: 12px 0 5px -18px;
+      color: var(--soft-ink);
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .tech-list .spec-subcategory:first-child {
+      margin-top: 0;
+    }
+
+    .documents {
+      margin-top: 10px;
+    }
+
+    .document-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .doc-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 16px;
+      border-radius: 8px;
+      background: var(--ink);
+      color: white;
+      font-size: 11px;
+      font-weight: 900;
+      text-decoration: none;
+      text-transform: uppercase;
+      box-shadow: 0 10px 20px rgba(17, 17, 17, .12);
+    }
+
+    .doc-button.secondary {
+      background: var(--dealer-orange);
+    }
+
+    .info-page {
+      display: none;
+    }
+
+    .info-page.is-visible {
+      display: block;
+    }
+
+    #announcementsPage {
+      font-size: 90%;
+    }
+
+    #announcementsPage .summary h2 {
+      font-size: clamp(23px, 3.6vw, 46px);
+    }
+
+    #announcementsPage .panel {
+      padding: 14px;
+    }
+
+    .info-layout {
+      display: grid;
+      gap: 14px;
+    }
+
+    .notice-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .notice-list li {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fafafa;
+      color: var(--soft-ink);
+      line-height: 1.45;
+    }
+
+    .service-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      font-size: 12px;
+    }
+
+    .service-table th,
+    .service-table td {
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .service-table th {
+      background: var(--ink);
+      color: white;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .sheet-note {
+      margin: 10px 0 0;
+      color: var(--soft-ink);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .faq-section + .faq-section {
+      margin-top: 18px;
+    }
+
+    .faq-section h4 {
+      margin: 0 0 10px;
+      font-family: "Roc Grotesk Black", Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    .faq-table {
+      width: auto;
+      min-width: 0;
+    }
+
+    .links-table {
+      width: auto;
+      min-width: 260px;
+    }
+
+    .links-table td,
+    .links-table th {
+      min-width: 220px;
+    }
+
+    .costing-table {
+      table-layout: fixed;
+      width: 1080px;
+      max-width: none;
+    }
+
+    .costing-table th:nth-child(1),
+    .costing-table td:nth-child(1) {
+      width: 280px;
+    }
+
+    .costing-table th:nth-child(2),
+    .costing-table td:nth-child(2) {
+      width: 190px;
+    }
+
+    .costing-table th:nth-child(3),
+    .costing-table td:nth-child(3) {
+      width: 340px;
+    }
+
+    .costing-table th:nth-child(4),
+    .costing-table td:nth-child(4) {
+      width: 80px;
+      text-align: center;
+    }
+
+    .costing-table th:nth-child(5),
+    .costing-table td:nth-child(5) {
+      width: 190px;
+    }
+
+    .costing-table th,
+    .costing-table td {
+      height: 38px;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    .timetable-table {
+      width: auto;
+      min-width: 420px;
+    }
+
+    .contact-window-table {
+      width: auto;
+      min-width: 520px;
+    }
+
+    .contact-window-table th:nth-child(1),
+    .contact-window-table td:nth-child(1) {
+      width: 170px;
+      white-space: nowrap;
+    }
+
+    .contact-window-table th:nth-child(2),
+    .contact-window-table td:nth-child(2) {
+      width: 350px;
+    }
+
+    @media (max-width: 860px) {
+      .bar {
+        grid-template-columns: 1fr;
+        padding: 14px 0;
+      }
+
+      .tabs,
+      .utility-tabs,
+      .search {
+        justify-self: stretch;
+        width: 100%;
+      }
+
+      .tabs,
+      .utility-tabs {
+        overflow-x: auto;
+      }
+
+      .tab,
+      .utility-tab {
+        flex: 1 0 auto;
+      }
+
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      .count {
+        justify-self: start;
+      }
+
+      .commerce-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .tech-list,
+      .box-list {
+        columns: 1;
+      }
+
+      .detail-hero {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .color-options {
+        flex-direction: row;
+        overflow-x: auto;
+      }
+
+      .color-option {
+        flex: 0 0 72px;
+      }
+
+      .main-photo {
+        min-height: 380px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .brand h1 { font-size: 18px; white-space: normal; }
+      .grid { grid-template-columns: 1fr; }
+      .prices { grid-template-columns: 1fr; }
+      .card { min-height: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="bar">
+        <div class="brand">
+          <a class="home-link" href="?category=bandbox" aria-label="Go to Luxury Audio">
+            <img src="assets/images/jbl-logo-orange.png" alt="JBL">
+          </a>
+          <div>
+            <h1>Product Pricelist</h1>
+          </div>
+        </div>
+        <nav class="tabs" aria-label="Product categories">
+          <button class="tab" type="button" data-tab="portables" aria-selected="true">Portables</button>
+          <button class="tab" type="button" data-tab="partybox" aria-selected="false">Partybox</button>
+          <button class="tab" type="button" data-tab="bandbox" aria-selected="false">Luxury Audio</button>
+        </nav>
+        <nav class="utility-tabs" aria-label="Information pages">
+          <button class="utility-tab" type="button" data-page="announcements" aria-selected="false">FAQs</button>
+          <button class="utility-tab" type="button" data-page="service-centers" aria-selected="false">Service Centers</button>
+        </nav>
+        <label class="search">
+          <span aria-hidden="true">&#128269;</span>
+          <input id="search" type="search" placeholder="Search SKU">
+        </label>
+      </div>
+    </header>
+
+    <main>
+      <section class="summary" id="summary" aria-live="polite">
+        <div>
+          <h2 id="categoryTitle">Portables</h2>
+          <p id="categoryDescription">Compact speakers with matched product photos, price references, color listings, and linked spec sheets.</p>
+        </div>
+        <div class="count" id="count">0 products</div>
+      </section>
+
+      <section class="grid" id="grid" aria-label="Products"></section>
+      <section class="empty" id="empty">
+        <h3>No matched products yet</h3>
+        <p>Products are hidden here until both a product photo and a spec sheet are available locally.</p>
+      </section>
+      <section class="detail" id="detail" aria-label="Product detail"></section>
+      <section class="info-page" id="announcementsPage" aria-label="FAQs">
+        <section class="summary" aria-live="polite">
+          <div>
+            <h2>FAQs</h2>
+            <p>Reference links, module costing, and module timetable for JBL product support.</p>
+          </div>
+        </section>
+        <div class="info-layout">
+          <section class="panel">
+            <h3>FAQs</h3>
+            <div class="faq-section">
+              <h4>Useful Links</h4>
+              <div class="table-wrap">
+                <table class="service-table faq-table links-table">
+                  <thead>
+                    <tr>
+                      <th>Resource</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><a href="https://drive.google.com/drive/folders/13Ea192aU-xzpATf8rKOYv6e6b5lVIwY4?usp=sharing" target="_blank" rel="noreferrer">Resource Drive</a></td>
+                    </tr>
+                    <tr>
+                      <td><a href="https://drive.google.com/file/d/1Ro_I6c_hTjgMsCzrztHegkV4i4ns3sEK/view?usp=drive_link" target="_blank" rel="noreferrer">LOA Request Form Download</a></td>
+                    </tr>
+                    <tr>
+                      <td><a href="https://drive.google.com/file/d/1wC0v-xEnxyO18lxqfqNm6nzPXrMlLmJS/view?usp=sharing" target="_blank" rel="noreferrer">Module Designs</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="faq-section">
+              <h4>Module Costing - Metro Manila</h4>
+              <div class="table-wrap">
+                <table class="service-table faq-table costing-table">
+                  <thead>
+                    <tr>
+                      <th>Module Type</th>
+                      <th>Module Cost Estimate</th>
+                      <th>Estimated Delivery and Installation</th>
+                      <th>CTS</th>
+                      <th>Target Revenue</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Partybox Riser - Low</td>
+                      <td>P 14,000.00</td>
+                      <td>P 10,000.00</td>
+                      <td>5%</td>
+                      <td>P 480,000.00</td>
+                    </tr>
+                    <tr>
+                      <td>Partybox Riser - Tall</td>
+                      <td>P 24,000.00</td>
+                      <td>P 10,000.00</td>
+                      <td>5%</td>
+                      <td>P 680,000.00</td>
+                    </tr>
+                    <tr>
+                      <td>Partybox Wall</td>
+                      <td>P 45,000.00</td>
+                      <td>P 10,000.00</td>
+                      <td>5%</td>
+                      <td>P 1,100,000.00</td>
+                    </tr>
+                    <tr>
+                      <td>Portables Wall</td>
+                      <td>P 45,000.00</td>
+                      <td>P 10,000.00</td>
+                      <td>5%</td>
+                      <td>P 1,100,000.00</td>
+                    </tr>
+                    <tr>
+                      <td>Headphones Wall</td>
+                      <td>P 45,000.00</td>
+                      <td>P 10,000.00</td>
+                      <td>5%</td>
+                      <td>P 1,100,000.00</td>
+                    </tr>
+                    <tr>
+                      <td>Headphones and Portables Table</td>
+                      <td>P 50,000.00</td>
+                      <td>P 10,000.00</td>
+                      <td>5%</td>
+                      <td>P 1,200,000.00</td>
+                    </tr>
+                    <tr>
+                      <td>Hybrid Module</td>
+                      <td>P 50,000.00 - P 70,000.00</td>
+                      <td>P 10,000.00</td>
+                      <td>5%</td>
+                      <td>P 1,200,000.00</td>
+                    </tr>
+                    <tr>
+                      <td>Tabletop 600mm</td>
+                      <td>P 10,500.00</td>
+                      <td>P 5,000.00</td>
+                      <td>5%</td>
+                      <td>P 310,000.00</td>
+                    </tr>
+                    <tr>
+                      <td>Tabletop 1200mm</td>
+                      <td>P 18,000.00</td>
+                      <td>P 5,000.00</td>
+                      <td>5%</td>
+                      <td>P 460,000.00</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="faq-section">
+              <h4>Module Costing - Provincial Rates</h4>
+              <div class="table-wrap">
+                <table class="service-table faq-table costing-table">
+                  <thead>
+                    <tr>
+                      <th>Module Type</th>
+                      <th>Module Cost Estimate</th>
+                      <th>Estimated Delivery, Installation, and Crating</th>
+                      <th>CTS</th>
+                      <th>Target Revenue</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Partybox Riser - Low</td>
+                      <td>P 14,000.00</td>
+                      <td>P 20,000.00</td>
+                      <td>5%</td>
+                      <td>P 680,000.00</td>
+                    </tr>
+                    <tr>
+                      <td>Partybox Riser - Tall</td>
+                      <td>P 24,000.00</td>
+                      <td>P 20,000.00</td>
+                      <td>5%</td>
+                      <td>P 880,000.00</td>
+                    </tr>
+                    <tr>
+                      <td>Partybox Wall</td>
+                      <td>P 45,000.00</td>
+                      <td>P 38,000.00</td>
+                      <td>5%</td>
+                      <td>P 1,660,000.00</td>
+                    </tr>
+                    <tr>
+                      <td>Portables Wall</td>
+                      <td>P 45,000.00</td>
+                      <td>P 38,000.00</td>
+                      <td>5%</td>
+                      <td>P 1,660,000.00</td>
+                    </tr>
+                    <tr>
+                      <td>Headphones Wall</td>
+                      <td>P 45,000.00</td>
+                      <td>P 38,000.00</td>
+                      <td>5%</td>
+                      <td>P 1,660,000.00</td>
+                    </tr>
+                    <tr>
+                      <td>Headphones and Portables Table</td>
+                      <td>P 50,000.00</td>
+                      <td>P 38,000.00</td>
+                      <td>5%</td>
+                      <td>P 1,760,000.00</td>
+                    </tr>
+                    <tr>
+                      <td>Hybrid Module</td>
+                      <td>P 50,000.00 - P 70,000.00</td>
+                      <td>P 38,000.00</td>
+                      <td>5%</td>
+                      <td>P 2,160,000.00</td>
+                    </tr>
+                    <tr>
+                      <td>Tabletop 600mm</td>
+                      <td>P 10,500.00</td>
+                      <td>P 15,000.00</td>
+                      <td>5%</td>
+                      <td>P 510,000.00</td>
+                    </tr>
+                    <tr>
+                      <td>Tabletop 1200mm</td>
+                      <td>P 18,000.00</td>
+                      <td>P 15,000.00</td>
+                      <td>5%</td>
+                      <td>P 660,000.00</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="faq-section">
+              <h4>Module Timetable</h4>
+              <div class="table-wrap">
+                <table class="service-table faq-table timetable-table">
+                  <thead>
+                    <tr>
+                      <th>Timeline</th>
+                      <th>Activity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Week 1-2</td>
+                      <td>Designing, Layout, and Approval</td>
+                    </tr>
+                    <tr>
+                      <td>Week 2-6</td>
+                      <td>Module Fabrication</td>
+                    </tr>
+                    <tr>
+                      <td>Week 6-8</td>
+                      <td>Delivery and Installation</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+      <section class="info-page" id="serviceCentersPage" aria-label="Service Centers">
+        <section class="summary" aria-live="polite">
+          <div>
+            <h2>Service Centers</h2>
+            <p>Contact window and service center directory for JBL support coordination.</p>
+          </div>
+        </section>
+        <div class="info-layout">
+          <section class="panel">
+            <h3>Contact Window</h3>
+            <table class="service-table contact-window-table">
+              <thead>
+                <tr>
+                  <th>Detail</th>
+                  <th>Information</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>APAC Support</td>
+                  <td>Support contact window</td>
+                </tr>
+                <tr>
+                  <td>CHAT</td>
+                  <td>https://support.jbl.com/ph/en/</td>
+                </tr>
+                <tr>
+                  <td>EMAIL</td>
+                  <td>https://support.jbl.com/ph/en/ or support.apac@harman.com</td>
+                </tr>
+                <tr>
+                  <td>HOTLINE</td>
+                  <td>(02) 8849-9325</td>
+                </tr>
+                <tr>
+                  <td>Operating Hours</td>
+                  <td>8AM - 6PM</td>
+                </tr>
+                <tr>
+                  <td>Mobile Calls Only</td>
+                  <td>Globe +63 917 849 7697</td>
+                </tr>
+                <tr>
+                  <td>Mobile Calls Only</td>
+                  <td>Smart +63 998 542 0234</td>
+                </tr>
+                <tr>
+                  <td>WEBSITE</td>
+                  <td>https://www.jbl.com.ph/</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+          <section class="panel">
+            <h3>Service Centers</h3>
+            <table class="service-table">
+              <thead>
+                <tr>
+                  <th>Area</th>
+                  <th>Branch Name</th>
+                  <th>Address</th>
+                  <th>Schedule</th>
+                  <th>Operating Hours</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>CENTRAL LUZON</td>
+                  <td>SOLID SERVICE- MALOLOS</td>
+                  <td># 71 Mc Arthur Hi way Brgy Dakila Malolos City</td>
+                  <td>Monday to Friday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>NCR</td>
+                  <td>FIXMASTER- SAN JUAN</td>
+                  <td>12 C. Broadway Ave. Cor Aurora Blvd. New Manila Quezon City</td>
+                  <td>Monday to Saturday</td>
+                  <td>9:00 am to 6:00pm</td>
+                </tr>
+                <tr>
+                  <td>CALABARZON</td>
+                  <td>SOLID SERVICE- CAVITE</td>
+                  <td>2ND Floor GRS Building Anabu 1-D Aguinaldo Hiway Imus Cavite</td>
+                  <td>Monday to Saturday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>LUZON</td>
+                  <td>SOLID SERVICE- BAGUIO</td>
+                  <td>#4 Road 2 Quezon Hill, Naguillan Road, Baguio City</td>
+                  <td>Monday to Friday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>LUZON</td>
+                  <td>SOLID SERVIC CABANATUAN</td>
+                  <td>Maharlika Hi-way,Brgy.Bernardo Cabanatuan City</td>
+                  <td>Monday to Friday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>LUZON</td>
+                  <td>SOLID SERVICE- DAGUPAN</td>
+                  <td>RS Bldg., Sunrise Subd., Arellano Bani, Dagupan City</td>
+                  <td>Monday to Friday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>LUZON</td>
+                  <td>SOLID SERVICE- LEGASPI</td>
+                  <td>Pecson Bldg. Rizal St., Barangay 19, Cabangan, Legaspi City</td>
+                  <td>Monday to Friday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>LUZON</td>
+                  <td>SOLID SERVICE- LIPA</td>
+                  <td>Unit-C, K-Pointe, Ayala Hi-way Sabang, Lipa City</td>
+                  <td>Monday to Friday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>LUZON</td>
+                  <td>SOLID SERVICE- NAGA</td>
+                  <td>Puritan Land Dev&#39;t. Corp. Bldg., Diversion Road, Conception Pequena, Naga City</td>
+                  <td>Monday to Friday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>LUZON</td>
+                  <td>SOLID SERVICE- OLONGAPO</td>
+                  <td>1962 DH National Hiway Purok 7 Old Kabalan Olongapo City</td>
+                  <td>Monday to Thursday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>LUZON</td>
+                  <td>SOLID SERVICE- SAN FERNANDO</td>
+                  <td>GOP Bldg., St. Francis Village Dolores, Sn Fernando, Pampanga</td>
+                  <td>Monday to Friday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>LUZON</td>
+                  <td>SOLID SERVICE- SAN PABLO</td>
+                  <td>Maharlika Highway, Brgy. San Roque San Pablo Laguna City</td>
+                  <td>Monday to Friday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>LUZON</td>
+                  <td>SOLID SERVICE- TARLAC</td>
+                  <td>Stall #9, Mariposa Bldg., Mc. Arthur Highway, San Nicolas Tarlac City</td>
+                  <td>Monday to Friday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>LUZON</td>
+                  <td>SOLID SERVICE TUGUEGARAO</td>
+                  <td>Rodel Bldg Campos St. Brgy Caritan Centro Tuguegarao</td>
+                  <td>Monday to Thursday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>VISAYAS</td>
+                  <td>SOLID SERVICE- BACOLOD</td>
+                  <td>Brgy Singcang-Airport, Magsaysay Avenue Bacolod City</td>
+                  <td>Monday to Saturday</td>
+                  <td>8:30 am to 5:30pm</td>
+                </tr>
+                <tr>
+                  <td>VISAYAS</td>
+                  <td>SOLID SERVICE- CEBU</td>
+                  <td>P. Del Rosario corner Don Pedro Cui St Extension Brgy. Kamagayan Cebu City</td>
+                  <td>Monday to Saturday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>VISAYAS</td>
+                  <td>FIXMASTER- CEBU</td>
+                  <td>Unit 201 Conchita Bldg. Osmena Blvd. Cebu City</td>
+                  <td>Monday to Saturday</td>
+                  <td>9:00 am to 6:00pm</td>
+                </tr>
+                <tr>
+                  <td>VISAYAS</td>
+                  <td>SOLID SERVICE DUMAGUETE</td>
+                  <td>Door 5 LC Martinez Bldg South Rd Calindagan Dumaguete City, Negros Oriental</td>
+                  <td>Monday to Thursday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>VISAYAS</td>
+                  <td>SOLID SERVICE- ILOILO</td>
+                  <td>Cor. Brgy. San Rafael, Sen. B. Aquino Ave. Diversion Rd., Mandurriao, Iloilo City</td>
+                  <td>Monday to Saturday</td>
+                  <td>8:30 am to 5:30pm</td>
+                </tr>
+                <tr>
+                  <td>VISAYAS</td>
+                  <td>SOLID SERVICE- KALIBO</td>
+                  <td>#19 Martyrs St. Kalibo Aklan</td>
+                  <td>Monday to Thursday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>VISAYAS</td>
+                  <td>SOLID SERVICE- TACLOBAN</td>
+                  <td>P. Gomez Street, Tacloban City (at the back of Sto. Nino Church)</td>
+                  <td>Monday to Friday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>VISAYAS</td>
+                  <td>SOLID SERVICE- TAGBILARAN</td>
+                  <td>M.Torralba St. Tagbilaran City Bohol</td>
+                  <td>Monday to Friday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>MINDANAO</td>
+                  <td>SOLID SERVICE- BUTUAN</td>
+                  <td>Stall #3 Desmark Bldg., Montilla Blvd. Corner Andaya St. Butuan City</td>
+                  <td>Monday to Thursday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>MINDANAO</td>
+                  <td>SOLID SERVICE- CAGAYAN DE ORO</td>
+                  <td>A. Velez St., cor. Mabini St., Cagayan de Oro City</td>
+                  <td>Monday to Saturday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>MINDANAO</td>
+                  <td>SOLID SERVICE- DAVAO</td>
+                  <td># 110-A Pichon St.(formerly Magallanes) Davao City 8000</td>
+                  <td>Monday to Saturday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>MINDANAO</td>
+                  <td>FIXMASTER- DAVAO</td>
+                  <td>Unit 2 GGO Summit/DMP Bldg., JP Laurel Ave. Bajada Davao City</td>
+                  <td>Monday to Saturday</td>
+                  <td>9:00 am to 6:00pm</td>
+                </tr>
+                <tr>
+                  <td>MINDANAO</td>
+                  <td>SOLID SERVICE- GENERAL SANTOS</td>
+                  <td>William Go Bldg. I. Santiago Blvd., General Santos City</td>
+                  <td>Monday to Friday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>MINDANAO</td>
+                  <td>SOLID SERVICE- OZAMIS</td>
+                  <td>Don Anselmo Bernad Ave., Ozamis City</td>
+                  <td>Monday to Thursday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+                <tr>
+                  <td>MINDANAO</td>
+                  <td>SOLID SERVICE ZAMBOANGA</td>
+                  <td>Ground Flr., LHB Building Veterans Avenue, Zamboanga Cit</td>
+                  <td>Monday to Thursday</td>
+                  <td>8:00 am to 5:00pm</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="drive-asset-map.js"></script>
+  <script src="product-variant-galleries.js"></script>
+  <script src="product-detail-content.js"></script>
+  <script>
+    const products = [
+      {
+        id: "go4-duo",
+        tab: "portables",
+        sku: "GO 4 DUO",
+        name: "JBL Go 4 Duo",
+        category: "Portables",
+        description: "Instant stereo sound is just a touch away. Ultra-Portable Bluetooth Speakers with AirTouch.",
+        srp: 4999,
+        dealer: 3399.32,
+        colors: ["Black"],
+        image: "assets/images/go4-duo.png",
+        spec: "assets/specs/go4-duo.pdf"
+      },
+      {
+        id: "go5",
+        tab: "portables",
+        sku: "GO5",
+        name: "JBL Go 5",
+        category: "Portables",
+        description: "Grab and Go. A compact, waterproof, and drop-proof speaker.",
+        srp: 2899,
+        dealer: 1971.32,
+        colors: ["BLK", "WHT", "PIK", "BLU", "RED", "PUR", "ORG", "YEL", "SQD"],
+        image: "assets/images/variants/go5-ORANGE-DETAIL-1.png",
+        spec: "assets/specs/go5.pdf"
+      },
+      {
+        id: "grip",
+        tab: "portables",
+        sku: "GRIP",
+        name: "JBL Grip",
+        category: "Portables",
+        description: "Grip the fun, anywhere, anytime. Compact Bluetooth speaker with bold JBL Pro Sound and ambient light.",
+        srp: 6799,
+        dealer: 4623.32,
+        colors: ["BLK", "WHT", "PIK", "BLU", "RED", "PUR", "ORG", "YEL", "SQD"],
+        image: "assets/images/variants/grip-PUR-1.png",
+        spec: "assets/specs/grip.pdf"
+      },
+      {
+        id: "go4",
+        tab: "portables",
+        sku: "GO4",
+        name: "JBL Go 4",
+        category: "Portables",
+        description: "Grab and Go. Ultra portable speaker.",
+        srp: 2599,
+        dealer: 1767.32,
+        colors: ["BLK", "WHT", "PIK", "BLU", "RED", "SAND", "PUR", "BORG", "SQD"],
+        image: "assets/images/variants/go4-GREY-DETAIL-1.png",
+        spec: "assets/specs/go4.pdf"
+      },
+      {
+        id: "clip5",
+        tab: "portables",
+        sku: "CLIP5",
+        name: "JBL Clip 5",
+        category: "Portables",
+        description: "Clip and Play. Ultra-portable waterproof speaker.",
+        srp: 3799,
+        dealer: 2583.32,
+        colors: ["BLK", "WHT", "PIK", "BLU", "RED", "SAND", "PUR", "BORG", "SQD"],
+        image: "assets/images/variants/clip5-FUNKY-BLACK-1.png",
+        spec: "assets/specs/clip5.pdf"
+      },
+      {
+        id: "flip7",
+        tab: "portables",
+        sku: "FLIP 7",
+        name: "JBL Flip 7",
+        category: "Portables",
+        description: "Bold sound for every adventure. Portable waterproof and drop-proof speaker.",
+        srp: 7999,
+        dealer: 5439.32,
+        colors: ["BLK", "BLU", "RED", "TEL", "GRY", "WHT", "GRN", "PIK"],
+        image: "assets/images/variants/flip7-PINK-FRONT-1.png",
+        spec: "assets/specs/flip7.pdf"
+      },
+      {
+        id: "charge6",
+        tab: "portables",
+        sku: "CHARGE 6",
+        name: "JBL Charge 6",
+        category: "Portables",
+        description: "Play and charge anywhere. Portable waterproof and drop-proof speaker.",
+        srp: 10999,
+        dealer: 7479.32,
+        colors: ["BLK", "BLU", "RED", "TEL", "GRY", "PIK", "WHT", "SQUAD"],
+        image: "assets/images/variants/charge6-SQUAD-1.png",
+        spec: "assets/specs/charge6.pdf"
+      },
+      {
+        id: "xtreme4",
+        tab: "portables",
+        sku: "XTREME 4",
+        name: "JBL Xtreme 4",
+        category: "Portables",
+        description: "Unleash powerful sound everywhere. Portable waterproof speaker with massive JBL Pro Sound and a convenient shoulder strap.",
+        srp: 19999,
+        dealer: 13599.32,
+        colors: ["BLK", "BLU", "CAMO"],
+        image: "assets/images/variants/xtreme4-BLUE-HERO-1.png",
+        spec: "assets/specs/xtreme4.pdf"
+      },
+      {
+        id: "boombox3",
+        tab: "portables",
+        sku: "BOOMBOX 3",
+        name: "JBL Boombox 3",
+        category: "Portables",
+        description: "Massive Sound. All Day Long. Portable speaker.",
+        srp: 29999,
+        dealer: 20399.32,
+        colors: ["BLK", "SQUAD"],
+        image: "assets/images/boombox3.png",
+        spec: "assets/specs/boombox3.pdf"
+      },
+      {
+        id: "partybox-130",
+        tab: "partybox",
+        sku: "PARTYBOX 130",
+        name: "JBL PartyBox 130",
+        category: "Partybox",
+        description: "Pure party energy. Portable party speaker with JBL legendary sound, a dynamic lightshow and a foldable ergonomic handle.",
+        srp: 23999,
+        dealer: 16319.32,
+        colors: ["BLK", "WHT"],
+        image: "assets/images/partybox-130.png",
+        spec: "assets/specs/partybox-130.pdf"
+      },
+      {
+        id: "partybox-520",
+        tab: "partybox",
+        sku: "PARTYBOX 520",
+        name: "JBL PartyBox 520",
+        category: "Partybox",
+        description: "Party loud, party long. Portable battery-powered party speaker with powerful and loud sound.",
+        srp: 42999,
+        dealer: 29239.32,
+        colors: ["BLK"],
+        image: "assets/images/partybox-520.png",
+        spec: "assets/specs/partybox-520.pdf"
+      },
+      {
+        id: "partybox-720",
+        tab: "partybox",
+        sku: "PARTYBOX 720",
+        name: "JBL PartyBox 720",
+        category: "Partybox",
+        description: "The life of every party. Loudest battery-powered JBL party speaker with superior JBL Pro Sound and a futuristic lightshow.",
+        srp: 59999,
+        dealer: 40799.32,
+        colors: ["BLK"],
+        image: "assets/images/partybox-720.png",
+        spec: "assets/specs/partybox-720.pdf"
+      },
+      {
+        id: "partybox-encore-essential-2",
+        tab: "partybox",
+        sku: "PARTYBOX ENCORE ESS 2",
+        name: "JBL PartyBox Encore Ess 2",
+        category: "Partybox",
+        description: "Bring the star power to your next party. Portable party speaker.",
+        srp: 18999,
+        dealer: 12919.32,
+        colors: ["BLK"],
+        image: "assets/images/partybox-encore-essential-2.png",
+        spec: "assets/specs/partybox-encore-essential-2.pdf"
+      },
+      {
+        id: "partybox-encore-2",
+        tab: "partybox",
+        sku: "PARTYBOX ENCORE 2",
+        name: "JBL PartyBox Encore 2",
+        category: "Partybox",
+        description: "Bring the star power to your next party. Portable party speaker with 2 mics.",
+        srp: 24999,
+        dealer: 16999.32,
+        colors: ["BLK"],
+        image: "assets/images/partybox-encore-2.png",
+        spec: "assets/specs/partybox-encore-2.pdf"
+      },
+      {
+        id: "partybox-encore-2-plus",
+        tab: "partybox",
+        sku: "PARTYBOX ENCORE 2 PLUS",
+        name: "JBL PartyBox Encore 2 Plus",
+        category: "Partybox",
+        description: "AI Vocal Removal from any song. Portable party speaker with real-time AI vocal removal and a wireless mic.",
+        srp: 26999,
+        dealer: 18359.32,
+        colors: ["BLK", "WHT"],
+        image: "assets/images/partybox-encore-2-plus.png",
+        spec: "assets/specs/partybox-encore-2-plus.pdf"
+      },
+      {
+        id: "partybox-otg-2",
+        tab: "partybox",
+        sku: "PARTYBOX OTG 2",
+        name: "JBL PartyBox OTG 2",
+        category: "Partybox",
+        description: "Instant party starter, wherever we go. Portable party speaker with one wireless digital mic, handle and a shoulder strap.",
+        srp: 21999,
+        dealer: 14959.32,
+        colors: ["BLK"],
+        image: "assets/images/partybox-otg-2.png",
+        spec: "assets/specs/partybox-otg-2.pdf"
+      },
+      {
+        id: "partybox-otg-2-plus",
+        tab: "partybox",
+        sku: "PARTYBOX OTG 2 PLUS",
+        name: "JBL PartyBox OTG 2 Plus",
+        category: "Partybox",
+        description: "AI Vocal Removal from any song. Portable party speaker with real-time AI vocal removal, two wireless mics, a handle and a shoulder strap.",
+        srp: 24999,
+        dealer: 16999.32,
+        colors: ["BLK", "WHT"],
+        image: "assets/images/partybox-otg-2-plus.png",
+        spec: "assets/specs/partybox-otg-2-plus.pdf"
+      },
+      {
+        id: "partybox-ultimate",
+        tab: "partybox",
+        sku: "PARTYTBOX ULTIMATE",
+        name: "JBL PartyBox Ultimate",
+        category: "Partybox",
+        description: "Party without limits. Massive party speaker with powerful sound, multi-dimensional lightshow, and splashproof design.",
+        srp: 84999,
+        dealer: 57799.32,
+        colors: ["BLK"],
+        image: "assets/images/partybox-ultimate.png",
+        spec: "assets/specs/partybox-ultimate.pdf"
+      },
+      {
+        id: "partybox-wireless-mic",
+        tab: "partybox",
+        sku: "PB WIRELESS MIC",
+        name: "JBL PartyBox Wireless Mic",
+        category: "Partybox",
+        description: "Unleash your voice. Digital wireless microphones.",
+        srp: 6999,
+        dealer: 4759.32,
+        colors: ["BLK"],
+        image: "assets/images/partybox-wireless-mic.png",
+        spec: "assets/specs/partybox-wireless-mic.pdf"
+      },
+      {
+        id: "easysing-mics",
+        tab: "partybox",
+        sku: "EASYSING MICS",
+        name: "JBL EasySing Mics",
+        category: "Partybox",
+        description: "Make any song a karaoke moment. Two wireless AI-powered microphones with real-time vocal removal.",
+        srp: 10999,
+        dealer: 7479.32,
+        colors: ["BLK"],
+        image: "assets/images/easysing-mics.png",
+        spec: "assets/specs/easysing-mics.pdf"
+      },
+      {
+        id: "easysing-mic-mini",
+        tab: "portables",
+        sku: "EASYSING MIC MINI",
+        name: "JBL EasySing Mic Mini",
+        category: "Portables",
+        description: "Take your voice with you. Portable AI-powered microphone with real-time vocal removal.",
+        srp: 8999,
+        dealer: 6119.32,
+        colors: ["BLK"],
+        image: "assets/images/easysing-mic-mini.png",
+        spec: "assets/specs/easysing-mic-mini.pdf"
+      },
+      {
+        id: "easysing-mic-mini-duo",
+        tab: "portables",
+        sku: "EASYSING MIC MINI DUO",
+        name: "JBL EasySing Mic Mini Duo",
+        category: "Portables",
+        description: "Take your voice with you. Two portable AI-powered microphone with real-time vocal removal.",
+        srp: 12999,
+        dealer: 8839.32,
+        colors: ["BLK"],
+        image: "assets/images/easysing-mic-mini-duo.png",
+        spec: "assets/specs/easysing-mic-mini-duo.pdf"
+      },
+      {
+        id: "partylight-beam",
+        tab: "partybox",
+        sku: "PARTYLIGHT BEAM",
+        name: "JBL PartyLight Beam",
+        category: "Partybox",
+        description: "Make your party vibe. Bluetooth projection party light.",
+        srp: 7999,
+        dealer: 5439.32,
+        colors: ["BLK"],
+        image: "assets/images/partylight-beam.png",
+        spec: "assets/specs/partylight-beam.pdf"
+      },
+      {
+        id: "partylight-stick",
+        tab: "partybox",
+        sku: "PARTYLIGHT STICK",
+        name: "JBL PartyLight Stick",
+        category: "Partybox",
+        description: "Light up the night. Bluetooth party light stick.",
+        srp: 5999,
+        dealer: 4079.32,
+        colors: ["BLK"],
+        image: "assets/images/partylight-stick.png",
+        spec: "assets/specs/partylight-stick.pdf"
+      },
+      {
+        id: "partybox-club-120",
+        tab: "partybox",
+        sku: "PARTYBOX CLUB 120",
+        name: "JBL PartyBox Club 120",
+        category: "Partybox",
+        description: "Pure party energy. Portable party speaker.",
+        srp: 22999,
+        dealer: 15639.32,
+        colors: ["BLK"],
+        image: "assets/images/partybox-club-120.png",
+        spec: "assets/specs/partybox-club-120.pdf"
+      },
+      {
+        id: "partybox-stage-320",
+        tab: "partybox",
+        sku: "PARTYBOX STAGE 320",
+        name: "JBL PartyBox Stage 320",
+        category: "Partybox",
+        description: "Bring your party anywhere. Portable party speaker with wheels.",
+        srp: 34999,
+        dealer: 23799.32,
+        colors: ["BLK"],
+        image: "assets/images/partybox-stage-320.png",
+        spec: "assets/specs/partybox-stage-320.pdf"
+      },
+      {
+        id: "bandbox-solo",
+        tab: "bandbox",
+        sku: "BANDBOX SOLO",
+        name: "JBL BandBox Solo",
+        category: "Bandbox",
+        description: "Your AI-powered bandmate. Compact AI-powered practice amp and speaker.",
+        srp: 16499,
+        dealer: 11219.32,
+        colors: ["BLK"],
+        image: "assets/images/bandbox-solo.png",
+        spec: "assets/specs/bandbox-solo.pdf"
+      },
+      {
+        id: "bandbox-trio",
+        tab: "bandbox",
+        sku: "BANDBOX TRIO",
+        name: "JBL BandBox Trio",
+        category: "Bandbox",
+        description: "Join the BandBox. Portable AI-powered practice amp and speaker.",
+        srp: 34999,
+        dealer: 23799.32,
+        colors: ["BLK"],
+        image: "assets/images/bandbox-trio.png",
+        spec: "assets/specs/bandbox-trio.pdf"
+      },
+      {
+        id: "bar-1000-mk2",
+        tab: "bandbox",
+        sku: "BAR 1000 MK2",
+        name: "JBL Bar 1000 MK2",
+        category: "Luxury Audio",
+        description: "7.1.4 channel soundbar system with detachable surround speakers, Dolby Atmos and DTS:X.",
+        srp: 69999,
+        dealer: 48999.3,
+        colors: ["BLK"],
+        image: "assets/images/bar-1000-mk2.png",
+        spec: "assets/specs/bar-1000-mk2.pdf"
+      },
+      {
+        id: "bar-1300-mk2",
+        tab: "bandbox",
+        sku: "BAR 1300 MK2",
+        name: "JBL Bar 1300 MK2",
+        category: "Luxury Audio",
+        description: "11.1.4 channel soundbar system with detachable surround speakers and Dolby Atmos and DTS:X.",
+        srp: 99999,
+        dealer: 69999.3,
+        colors: ["BLK"],
+        image: "assets/images/bar-1300-mk2.png",
+        spec: "assets/specs/bar-1300-mk2.pdf"
+      },
+      {
+        id: "bar-300-mk2",
+        tab: "bandbox",
+        sku: "BAR 300 MK2",
+        name: "JBL Bar 300 MK2",
+        category: "Luxury Audio",
+        description: "5.0 channel all-in-one soundbar with Dolby Atmos.",
+        srp: 29999,
+        dealer: 20999.3,
+        colors: ["BLK", "WHT"],
+        image: "assets/images/bar-300-mk2.png",
+        spec: "assets/specs/bar-300-mk2.pdf"
+      },
+      {
+        id: "bar-500-mk2",
+        tab: "bandbox",
+        sku: "BAR 500 MK2",
+        name: "JBL Bar 500 MK2",
+        category: "Luxury Audio",
+        description: "5.1 channel soundbar system with Dolby Atmos.",
+        srp: 39999,
+        dealer: 27999.3,
+        colors: ["BLK", "WHT"],
+        image: "assets/images/bar-500-mk2.png",
+        spec: "assets/specs/bar-500-mk2.pdf"
+      },
+      {
+        id: "bar-800-mk2",
+        tab: "bandbox",
+        sku: "BAR 800 MK2",
+        name: "JBL Bar 800 MK2",
+        category: "Luxury Audio",
+        description: "7.1 channel soundbar system with detachable speakers and Dolby Atmos.",
+        srp: 54999,
+        dealer: 38499.3,
+        colors: ["BLK"],
+        image: "assets/images/bar-800-mk2.png",
+        spec: "assets/specs/bar-800-mk2.pdf"
+      }
+    ];
+
+    const descriptions = {
+      portables: "With long-lasting battery life and Bluetooth technology, JBL portable wireless speakers are the best way to enjoy your music away from home.",
+      partybox: "Liven up the party with JBL's Bluetooth-enabled party speakers featuring a dynamic light show.",
+      bandbox: "Dive deeper into all the action with immersive, 3D surround sound brought to you by our soundbars.\n\nWith our latest acoustic technologies, a retro look, and a wide range of connectivity options-our Hi-Fi music systems are anything but ordinary."
+    };
+
+    const titles = {
+      portables: "Portables",
+      partybox: "Partybox",
+      bandbox: "Luxury Audio"
+    };
+
+    const productSortOrder = {
+      portables: [
+        "go4-duo",
+        "go5",
+        "clip5",
+        "grip",
+        "flip7",
+        "charge6",
+        "xtreme4",
+        "boombox3",
+        "go4",
+        "easysing-mic-mini",
+        "easysing-mic-mini-duo"
+      ],
+      partybox: [
+        "partybox-130",
+        "partybox-stage-320",
+        "partybox-encore-essential-2",
+        "partybox-encore-2",
+        "partybox-otg-2",
+        "partybox-520",
+        "partybox-720",
+        "partybox-ultimate",
+        "partybox-wireless-mic",
+        "easysing-mics",
+        "partylight-beam",
+        "partylight-stick",
+        "partybox-encore-2-plus",
+        "partybox-otg-2-plus",
+        "partybox-club-120"
+      ],
+      bandbox: [
+        "bandbox-solo",
+        "bandbox-trio",
+        "bar-1000-mk2",
+        "bar-1300-mk2",
+        "bar-300-mk2",
+        "bar-500-mk2",
+        "bar-800-mk2"
+      ]
+    };
+
+    const galleryCounts = {
+      "go4-duo": 3,
+      go5: 4,
+      grip: 6,
+      go4: 7,
+      clip5: 4,
+      flip7: 7,
+      charge6: 6,
+      xtreme4: 4,
+      boombox3: 4,
+      "partybox-520": 5,
+      "partybox-130": 7,
+      "partybox-720": 5,
+      "partybox-encore-essential-2": 5,
+      "partybox-encore-2": 5,
+      "partybox-encore-2-plus": 6,
+      "partybox-otg-2": 7,
+      "partybox-otg-2-plus": 7,
+      "partybox-ultimate": 5,
+      "partybox-wireless-mic": 5,
+      "easysing-mics": 4,
+      "easysing-mic-mini": 8,
+      "easysing-mic-mini-duo": 8,
+      "partylight-beam": 3,
+      "partylight-stick": 3,
+      "partybox-club-120": 5,
+      "partybox-stage-320": 7,
+      "bandbox-solo": 7,
+      "bandbox-trio": 7,
+      "bar-1000-mk2": 12,
+      "bar-1300-mk2": 10,
+      "bar-300-mk2": 9,
+      "bar-500-mk2": 9,
+      "bar-800-mk2": 11
+    };
+
+    const supplementalDocuments = {
+      "go4-duo": "Quick Start Guide",
+      go4: "Quick Start Guide",
+      flip7: "Quick Start Guide",
+      charge6: "Quick Start Guide",
+      xtreme4: "Quick Start Guide",
+      boombox3: "Quick Start Guide",
+      "partybox-720": "User Manual",
+      "partybox-130": "Quick Start Guide",
+      "partybox-encore-essential-2": "User Manual",
+      "partybox-encore-2": "User Manual",
+      "partybox-otg-2": "User Manual",
+      "partybox-otg-2-plus": "User Manual",
+      "partybox-ultimate": "User Manual",
+      "partybox-club-120": "User Manual",
+      "partybox-stage-320": "User Manual",
+      "partybox-wireless-mic": "Quick Start Guide",
+      "easysing-mic-mini": "Quick Start Guide",
+      "easysing-mic-mini-duo": "Quick Start Guide",
+      "partylight-beam": "Quick Start Guide",
+      "partylight-stick": "Quick Start Guide",
+      "easysing-mics": "Quick Start Guide",
+      "bandbox-solo": "Quick Start Guide",
+      "bandbox-trio": "Quick Start Guide",
+      "bar-1000-mk2": "User Manual",
+      "bar-1300-mk2": "User Manual",
+      "bar-300-mk2": "User Manual",
+      "bar-500-mk2": "User Manual",
+      "bar-800-mk2": "User Manual"
+    };
+
+    const categoryFeatures = {
+      portables: [
+        "Signature JBL sound in a portable design.",
+        "Designed for everyday listening indoors or outdoors.",
+        "Wireless Bluetooth playback for quick pairing.",
+        "Built for easy carry, quick setup, and flexible placement."
+      ],
+      partybox: [
+        "Powerful JBL party sound for gatherings and events.",
+        "Bluetooth-enabled playback for fast wireless music control.",
+        "Dynamic light experience designed to match the party atmosphere.",
+        "Designed for quick setup and flexible party use."
+      ],
+      bandbox: [
+        "Portable AI-powered practice amp and speaker design.",
+        "Built for practice, performance, and easy music-making sessions.",
+        "Combines JBL audio performance with musician-focused controls.",
+        "Designed for compact setup and flexible creative use."
+      ]
+    };
+
+    const currency = new Intl.NumberFormat("en-PH", {
+      style: "currency",
+      currency: "PHP",
+      minimumFractionDigits: 2
+    });
+
+    const peso = value => currency.format(value).replace("â‚±", "P ");
+    const assetPath = path => window.DRIVE_ASSET_MAP?.[path] || path;
+    const galleryFor = product => Array.from(
+      { length: galleryCounts[product.id] || 1 },
+      (_, index) => `assets/images/gallery/${product.id}-${index + 1}.png`
+    );
+
+    const grid = document.querySelector("#grid");
+    const empty = document.querySelector("#empty");
+    const detail = document.querySelector("#detail");
+    const summary = document.querySelector("#summary");
+    const count = document.querySelector("#count");
+    const categoryTitle = document.querySelector("#categoryTitle");
+    const categoryDescription = document.querySelector("#categoryDescription");
+    const search = document.querySelector("#search");
+    const tabs = document.querySelectorAll(".tab");
+    const utilityTabs = document.querySelectorAll(".utility-tab");
+    const announcementsPage = document.querySelector("#announcementsPage");
+    const serviceCentersPage = document.querySelector("#serviceCentersPage");
+    let activeTab = "portables";
+    let activePage = "catalog";
+
+    function productCard(product) {
+      return `
+        <article class="card">
+          <a class="card-link media" href="?product=${product.id}&from=${activeTab}" aria-label="Open ${product.name}">
+            <img src="${assetPath(product.image)}" alt="${product.name}">
+          </a>
+          <div class="copy">
+            <div>
+              <h3 class="name"><a class="name-link" href="?product=${product.id}&from=${activeTab}">${product.name}</a></h3>
+              <p class="description">${product.description || "Designed to deliver signature JBL performance in a clean, compact package."}</p>
+            </div>
+            <div class="prices">
+              <div class="price">
+                <b>SRP</b>
+                <span>${currency.format(product.srp)}</span>
+              </div>
+              <div class="price dealer">
+                <b>DP</b>
+                <span>${currency.format(product.dealer)}</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function commerceSpecs(product) {
+      return [
+        ["SKU", product.sku],
+        ["Category", product.category],
+        ["SRP", peso(product.srp)],
+        ["DP", peso(product.dealer)]
+      ];
+    }
+
+    function detailArray(value) {
+      if (!value) return [];
+      return Array.isArray(value) ? value : [value];
+    }
+
+    function technicalSpecLines(product) {
+      const details = detailArray(window.productDetailContent?.[product.id]?.technicalSpecifications)
+        .filter(item => item && String(item).trim().toLowerCase() !== "t");
+      if (details.length) return details;
+
+      const categorySpecMap = {
+        portables: [
+          "Bluetooth wireless streaming",
+          "Portable speaker design",
+          "Rechargeable battery",
+          "USB charging",
+          "JBL Pro Sound tuning",
+          "Waterproof and dustproof design where applicable",
+          "Multi-speaker pairing where supported",
+          "Companion app support where applicable"
+        ],
+        partybox: [
+          "Bluetooth wireless streaming",
+          "JBL Pro Sound party speaker tuning",
+          "Dynamic light show where applicable",
+          "Microphone input where applicable",
+          "Guitar input where applicable",
+          "Rechargeable battery where applicable",
+          "Multi-speaker connection where supported",
+          "USB playback or charging where applicable",
+          "Splashproof design where applicable",
+          "Companion app control where supported"
+        ],
+        bandbox: [
+          "AI-powered practice amp and speaker",
+          "Bluetooth wireless playback",
+          "Instrument-focused control layout",
+          "Portable design",
+          "Rechargeable battery",
+          "Practice and performance modes",
+          "Aux or instrument input where applicable",
+          "USB charging or connectivity where applicable"
+        ]
+      };
+
+      return categorySpecMap[product.tab] || [
+        "Technical specifications to be populated from product spec sheet page 2."
+      ];
+    }
+
+    function isSpecSubcategory(item) {
+      const text = String(item).trim().toLowerCase();
+      return [
+        "general specification",
+        "general specifications",
+        "audio specification",
+        "audio specifications",
+        "control and connection specifications",
+        "battery specifications",
+        "dimension specifications",
+        "dimensions",
+        "product dimensions",
+        "packaging dimensions",
+        "hdmi specification",
+        "hdmi specifications",
+        "usb specification",
+        "usb specifications",
+        "wireless specification",
+        "wireless specifications",
+        "wireless mic specification",
+        "wireless microphone specifications",
+        "one commander specification",
+        "input sensitivity",
+        "built-in powerbank",
+        "fast charge",
+        "jbl portable app",
+        "lossless audio playback",
+        "multi-speaker connection by auracastâ„¢"
+      ].includes(text);
+    }
+
+    function renderTechnicalSpecs(product) {
+      return technicalSpecLines(product).map(item => {
+        const text = String(item).trim();
+        const className = isSpecSubcategory(text) ? ` class="spec-subcategory"` : "";
+        return `<li${className}>${text}</li>`;
+      }).join("");
+    }
+
+    function whatsInTheBox(product) {
+      const box = detailArray(window.productDetailContent?.[product.id]?.whatsInTheBox);
+      if (box.length) return box;
+
+      return [
+        `1 x ${product.name}`,
+        "1 x USB charging cable or power cable",
+        "1 x Quick-start guide",
+        "1 x Safety instruction and warranty card"
+      ];
+    }
+
+    function documentActions(product) {
+      const supplementalLabel = supplementalDocuments[product.id];
+      const supplemental = supplementalLabel
+        ? `<a class="doc-button secondary" href="${assetPath(`assets/manuals/${product.id}.pdf`)}" target="_blank" rel="noreferrer">${supplementalLabel}</a>`
+        : "";
+
+      return `
+        <section class="panel documents">
+          <h3>Documents</h3>
+          <div class="document-actions">
+            <a class="doc-button" href="${assetPath(product.spec)}" target="_blank" rel="noreferrer">Spec sheet</a>
+            ${supplemental}
+          </div>
+        </section>
+      `;
+    }
+
+    function productFeatures(product) {
+      return [product.description, ...(categoryFeatures[product.tab] || [])].filter(Boolean);
+    }
+
+    function renderDetail(product) {
+      const variants = window.productVariantGalleries?.[product.id] || {};
+      const colorKeys = sortColorKeys(product, Object.keys(variants).filter(color => variants[color]?.length));
+      const selectedColor = colorKeys[0] || product.colors[0] || "BLK";
+      const images = colorKeys.length ? variants[selectedColor] : galleryFor(product);
+      const features = productFeatures(product).map(item => `<li>${item}</li>`).join("");
+      const commerce = commerceSpecs(product).map(([label, value]) => `
+        <div class="commerce-item">
+          <b>${label}</b>
+          <span>${value}</span>
+        </div>
+      `).join("");
+      const techSpecs = renderTechnicalSpecs(product);
+      const boxItems = whatsInTheBox(product).map(item => `<li>${item}</li>`).join("");
+
+      summary.style.display = "none";
+      grid.style.display = "none";
+      empty.classList.remove("is-visible");
+      detail.classList.add("is-visible");
+      detail.innerHTML = `
+        <button class="detail-back" type="button" id="backToCatalog">&larr; Back to catalog</button>
+        <section class="detail-hero">
+          <div class="gallery-layout">
+            <div class="color-options" aria-label="${product.name} available colors">
+              ${colorKeys.map(color => `
+                <button class="color-option" type="button" data-color="${color}" aria-selected="${color === selectedColor}">
+                  ${color}
+                </button>
+              `).join("")}
+            </div>
+            <div class="detail-media">
+              <div class="main-photo">
+                <img id="mainPhoto" src="${assetPath(images[0])}" alt="${product.name}">
+              </div>
+              <div class="thumbs" id="thumbs" aria-label="${product.name} photo angles">
+                ${renderThumbs(product, images)}
+              </div>
+            </div>
+          </div>
+          <div class="detail-copy">
+            <div>
+              <h2>${product.name}</h2>
+              <p class="description">${product.description}</p>
+            </div>
+            <div class="panel">
+              <h3>Features and Benefits</h3>
+              <ul class="feature-list">${features}</ul>
+            </div>
+          </div>
+        </section>
+        <section class="panel specs">
+          <h3>Product Details</h3>
+          <div class="commerce-grid">${commerce}</div>
+          <div class="wide-spec">
+            <b>Technical specifications</b>
+            <ul class="tech-list">${techSpecs}</ul>
+          </div>
+          <div class="wide-spec">
+            <b>What's in the box</b>
+            <ul class="box-list">${boxItems}</ul>
+          </div>
+        </section>
+        ${documentActions(product)}
+      `;
+
+      document.querySelector("#backToCatalog").addEventListener("click", () => {
+        history.pushState({}, "", location.pathname);
+        tabs.forEach(item => item.setAttribute("aria-selected", String(item.dataset.tab === activeTab)));
+        render();
+      });
+
+      detail.querySelectorAll(".thumb").forEach(thumb => {
+        thumb.addEventListener("click", () => {
+          detail.querySelector("#mainPhoto").src = thumb.dataset.image;
+          detail.querySelectorAll(".thumb").forEach(item => item.setAttribute("aria-selected", String(item === thumb)));
+        });
+      });
+
+      detail.querySelectorAll(".color-option").forEach(button => {
+        button.addEventListener("click", () => {
+          const nextImages = variants[button.dataset.color] || images;
+          detail.querySelectorAll(".color-option").forEach(item => item.setAttribute("aria-selected", String(item === button)));
+          detail.querySelector("#mainPhoto").src = assetPath(nextImages[0]);
+          detail.querySelector("#thumbs").innerHTML = renderThumbs(product, nextImages);
+          bindThumbs();
+        });
+      });
+    }
+
+    function sortColorKeys(product, keys) {
+      if (product.tab === "partybox" || product.tab === "bandbox") {
+        return [...keys].sort((a, b) => {
+          const aBlack = a === "BLK" || a === "Black";
+          const bBlack = b === "BLK" || b === "Black";
+          if (aBlack && !bBlack) return -1;
+          if (!aBlack && bBlack) return 1;
+          return product.colors.indexOf(a) - product.colors.indexOf(b);
+        });
+      }
+
+      return keys;
+    }
+
+    function renderThumbs(product, images) {
+      return images.map((image, index) => `
+        <button class="thumb" type="button" data-image="${assetPath(image)}" aria-selected="${index === 0}">
+          <img src="${assetPath(image)}" alt="${product.name} view ${index + 1}">
+        </button>
+      `).join("");
+    }
+
+    function bindThumbs() {
+      detail.querySelectorAll(".thumb").forEach(thumb => {
+        thumb.addEventListener("click", () => {
+          detail.querySelector("#mainPhoto").src = thumb.dataset.image;
+          detail.querySelectorAll(".thumb").forEach(item => item.setAttribute("aria-selected", String(item === thumb)));
+        });
+      });
+    }
+
+    function setNavigationState() {
+      tabs.forEach(item => item.setAttribute("aria-selected", String(activePage === "catalog" && item.dataset.tab === activeTab)));
+      utilityTabs.forEach(item => item.setAttribute("aria-selected", String(item.dataset.page === activePage)));
+      search.style.display = activePage === "catalog" ? "" : "none";
+    }
+
+    function hideDynamicViews() {
+      summary.style.display = "none";
+      grid.style.display = "none";
+      empty.classList.remove("is-visible");
+      detail.classList.remove("is-visible");
+      detail.innerHTML = "";
+      announcementsPage.classList.remove("is-visible");
+      serviceCentersPage.classList.remove("is-visible");
+    }
+
+    function renderInfoPage(page) {
+      activePage = page;
+      hideDynamicViews();
+      setNavigationState();
+      if (page === "announcements") {
+        announcementsPage.classList.add("is-visible");
+      } else {
+        serviceCentersPage.classList.add("is-visible");
+      }
+    }
+
+    function render() {
+      const params = new URLSearchParams(location.search);
+      const page = params.get("page");
+      if (page === "announcements" || page === "service-centers") {
+        renderInfoPage(page);
+        return;
+      }
+
+      activePage = "catalog";
+      const category = params.get("category");
+      if (category && titles[category]) {
+        activeTab = category;
+        history.replaceState({}, "", location.pathname);
+      }
+
+      const selectedId = params.get("product");
+      const selectedProduct = products.find(product => product.id === selectedId);
+      if (selectedProduct) {
+        const fromCategory = params.get("from");
+        activeTab = fromCategory && titles[fromCategory] ? fromCategory : selectedProduct.tab;
+        setNavigationState();
+        renderDetail(selectedProduct);
+        return;
+      }
+
+      setNavigationState();
+      summary.style.display = "";
+      grid.style.display = "";
+      detail.classList.remove("is-visible");
+      detail.innerHTML = "";
+      announcementsPage.classList.remove("is-visible");
+      serviceCentersPage.classList.remove("is-visible");
+
+      const query = search.value.trim().toLowerCase();
+      const visible = products.filter(product => {
+        const inTab = product.tab === activeTab;
+        const matches = [product.name, product.sku, product.category, product.colors.join(" ")]
+          .join(" ")
+          .toLowerCase()
+          .includes(query);
+        return inTab && matches;
+      }).sort((a, b) => {
+        const order = productSortOrder[activeTab] || [];
+        return order.indexOf(a.id) - order.indexOf(b.id);
+      });
+
+      categoryTitle.textContent = titles[activeTab];
+      categoryDescription.innerHTML = descriptions[activeTab].replace(/\n\n/g, "<br><br>");
+      count.textContent = `${visible.length} ${visible.length === 1 ? "product" : "products"}`;
+      grid.innerHTML = visible.map(productCard).join("");
+      empty.classList.toggle("is-visible", visible.length === 0);
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        activePage = "catalog";
+        activeTab = tab.dataset.tab;
+        const params = new URLSearchParams(location.search);
+        if (params.has("product") || params.has("page")) {
+          history.pushState({}, "", location.pathname);
+        }
+        setNavigationState();
+        render();
+      });
+    });
+
+    utilityTabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        const page = tab.dataset.page;
+        history.pushState({}, "", `${location.pathname}?page=${page}`);
+        renderInfoPage(page);
+      });
+    });
+
+    search.addEventListener("input", render);
+    window.addEventListener("popstate", render);
+    render();
+  </script>
+</body>
+</html>
+
+
+
+
