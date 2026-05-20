@@ -1940,37 +1940,6 @@
       "bar-800-mk2": 11
     };
 
-    const supplementalDocuments = {
-      "go4-duo": "Quick Start Guide",
-      go4: "Quick Start Guide",
-      flip7: "Quick Start Guide",
-      charge6: "Quick Start Guide",
-      xtreme4: "Quick Start Guide",
-      boombox3: "Quick Start Guide",
-      "partybox-720": "User Manual",
-      "partybox-130": "Quick Start Guide",
-      "partybox-encore-essential-2": "User Manual",
-      "partybox-encore-2": "User Manual",
-      "partybox-otg-2": "User Manual",
-      "partybox-otg-2-plus": "User Manual",
-      "partybox-ultimate": "User Manual",
-      "partybox-club-120": "User Manual",
-      "partybox-stage-320": "User Manual",
-      "partybox-wireless-mic": "Quick Start Guide",
-      "easysing-mic-mini": "Quick Start Guide",
-      "easysing-mic-mini-duo": "Quick Start Guide",
-      "partylight-beam": "Quick Start Guide",
-      "partylight-stick": "Quick Start Guide",
-      "easysing-mics": "Quick Start Guide",
-      "bandbox-solo": "Quick Start Guide",
-      "bandbox-trio": "Quick Start Guide",
-      "bar-1000-mk2": "User Manual",
-      "bar-1300-mk2": "User Manual",
-      "bar-300-mk2": "User Manual",
-      "bar-500-mk2": "User Manual",
-      "bar-800-mk2": "User Manual"
-    };
-
     const categoryFeatures = {
       portables: [
         "Signature JBL sound in a portable design.",
@@ -2157,18 +2126,11 @@
     }
 
     function documentActions(product) {
-      const supplementalLabel = supplementalDocuments[product.id];
-      const supplementalHref = `${product.id}-manuals.pdf`;
-      const supplemental = supplementalLabel
-        ? `<a class="doc-button secondary" href="${supplementalHref}" target="_blank" rel="noreferrer">${supplementalLabel}</a>`
-        : "";
-
       return `
         <section class="panel documents">
           <h3>Documents</h3>
           <div class="document-actions">
             <a class="doc-button" href="${assetPath(product.spec)}" target="_blank" rel="noreferrer">Spec sheet</a>
-            ${supplemental}
           </div>
         </section>
       `;
