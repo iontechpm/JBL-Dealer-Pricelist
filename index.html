@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -1997,11 +1997,14 @@
       minimumFractionDigits: 2
     });
 
-    const peso = value => currency.format(value).replace("₱", "P ");
+    const peso = value => currency.format(value).replace("â‚±", "P ");
     const galleryFor = product => Array.from(
       { length: galleryCounts[product.id] || 1 },
       (_, index) => `${product.id}-${index + 1}.jpg`
     );
+
+    const normalizeAssetPath = path => String(path || "").split("/").pop();
+    const normalizeImageList = images => (images || []).map(normalizeAssetPath);
 
     const grid = document.querySelector("#grid");
     const empty = document.querySelector("#empty");
@@ -2130,7 +2133,7 @@
         "fast charge",
         "jbl portable app",
         "lossless audio playback",
-        "multi-speaker connection by auracast™"
+        "multi-speaker connection by auracastâ„¢"
       ].includes(text);
     }
 
@@ -2179,7 +2182,7 @@
       const variants = window.productVariantGalleries?.[product.id] || {};
       const colorKeys = sortColorKeys(product, Object.keys(variants).filter(color => variants[color]?.length));
       const selectedColor = colorKeys[0] || product.colors[0] || "BLK";
-      const images = colorKeys.length ? variants[selectedColor] : galleryFor(product);
+      const images = normalizeImageList(colorKeys.length ? variants[selectedColor] : galleryFor(product));
       const features = productFeatures(product).map(item => `<li>${item}</li>`).join("");
       const commerce = commerceSpecs(product).map(([label, value]) => `
         <div class="commerce-item">
@@ -2255,7 +2258,7 @@
 
       detail.querySelectorAll(".color-option").forEach(button => {
         button.addEventListener("click", () => {
-          const nextImages = variants[button.dataset.color] || images;
+          const nextImages = normalizeImageList(variants[button.dataset.color] || images);
           detail.querySelectorAll(".color-option").forEach(item => item.setAttribute("aria-selected", String(item === button)));
           detail.querySelector("#mainPhoto").src = nextImages[0];
           detail.querySelector("#thumbs").innerHTML = renderThumbs(product, nextImages);
@@ -2279,7 +2282,7 @@
     }
 
     function renderThumbs(product, images) {
-      return images.map((image, index) => `
+      return normalizeImageList(images).map((image, index) => `
         <button class="thumb" type="button" data-image="${image}" aria-selected="${index === 0}">
           <img src="${image}" alt="${product.name} view ${index + 1}">
         </button>
