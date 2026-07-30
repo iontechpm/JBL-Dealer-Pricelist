@@ -1577,6 +1577,18 @@
         spec: "partybox-130.pdf"
       },
       {
+        id: "partybox-330",
+        tab: "partybox",
+        sku: "PARTYBOX 330",
+        name: "JBL PartyBox 330",
+        category: "Partybox",
+        description: "Portable party speaker with JBL legendary sound, futuristic lighting, a telescopic handle and wide wheels.",
+        srp: 35999,
+        dealer: 25199.3,
+        colors: ["BLK", "WHT"],
+        image: "LS_ JBL_PARTYBOX_330_HERO_1_BLACK_0009_x6.png"
+      },
+      {
         id: "partybox-520",
         tab: "partybox",
         sku: "PARTYBOX 520",
@@ -1877,6 +1889,78 @@
       }
     ];
 
+    window.productVariantGalleries = window.productVariantGalleries || {};
+    window.productVariantGalleries["partybox-330"] = {
+      BLK: [
+        "LS_ JBL_PARTYBOX_330_HERO_1_BLACK_0009_x6.png",
+        "LS_ JBL_PARTYBOX_330_HERO_2_BLACK_0014_x8.png",
+        "LS_ JBL_PARTYBOX_330_FRONT_BLACK_0032_x5_1.png",
+        "LS_ JBL_PARTYBOX_330_3_4_HANDLE_RIGHT_BLACK_0067_x5.png",
+        "LS_ JBL_PARTYBOX_330_HANDLE_UP_LEFT _BLACK_0083_x6.png",
+        "LS_ JBL_PARTYBOX_330_DETAIL_BLACK_0060_x6.png",
+        "LS_ JBL_PARTYBOX_330_TOP_BLACK_0139_x5.png",
+        "LS_ JBL_PARTYBOX_330_BOTTOM_BLACK_0144_x2.png",
+        "LS_ JBL_PARTYBOX_330_WHEEL_BLACK_0106_x2.png"
+      ],
+      WHT: [
+        "LS_ JBL_PARTYBOX_330_HERO_1_WHITE_0022_x3.png",
+        "LS_ JBL_PARTYBOX_330_HERO_2_WHITE_0021_x5.png",
+        "LS_ JBL_PARTYBOX_330_FRONT_WHITE_0029_x3.png",
+        "LS_ JBL_PARTYBOX_330_3_4_HANDLE_RIGHT_0072_x4 WHITE.png",
+        "LS_ JBL_PARTYBOX_330_HANDLE_UP_LEFT_WHITE_0078_x6.png",
+        "LS_ JBL_PARTYBOX_330_DETAIL_WHITE_0057_x5.png",
+        "LS_ JBL_PARTYBOX_330_TOP_WHITE_0127_x4.png",
+        "LS_ JBL_PARTYBOX_330_BOTTOM_WHITE_0148_x2.png"
+      ]
+    };
+
+    window.productDetailContent = window.productDetailContent || {};
+    window.productDetailContent["partybox-330"] = {
+      technicalSpecifications: [
+        "General Specifications",
+        "Power input: AC 100 – 240 V ~ 50 / 60 Hz",
+        "Output power: 280 W RMS (IEC60268)",
+        "Audio Specifications",
+        "Transducer:",
+        "2 × φ165mm (6.5 inch) effective woofers",
+        "2 × φ25mm (1 inch) PEN dome tweeters",
+        "Frequency response: 40 Hz – 20 kHz (-6dB)",
+        "Signal-to-noise ratio: > 80dB",
+        "Control and Connection Specifications",
+        "Input sensitivity:",
+        "Aux-In: 250 mV RMS (3.5 mm connector)",
+        "Mic-In: 20 mV RMS",
+        "Guitar-In: 100 mV RMS",
+        "Bluetooth/USB input: -12 dBFS",
+        "Optical-In: -12 dBFS",
+        "Bluetooth® version: 6.0",
+        "Bluetooth® profile: A2DP V1.4, AVRCP V1.6",
+        "Bluetooth® transmitter frequency range: 2.4 GHz - 2.4835 GHz",
+        "Bluetooth® transmitter power: ≤ 15 dBm (EIRP)",
+        "Bluetooth® transmitter modulation: GFSK, π/4 DQPSK, 8DPSK",
+        "USB format: FAT16, FAT32",
+        "Supported formats: .MP3, .WAV, .FLAC (not available for EMEA region)",
+        "USB-C charge out: 5 V / 1 A",
+        "Cable type: AC power cable (type varies by regions)",
+        "AC power cable length: 2.0 m / 6.6 ft",
+        "Dimension Specifications",
+        "Product dimensions (W x H x D): 334 x 662.5 x 375 mm / 13.15 x 26.08 x 14.76 inch",
+        "Net weight: 17.1 kg / 37.7 lbs",
+        "Packaging dimensions (W x H x D): 392 x 718 x 441 mm / 15.43 x 28.27 x 17.36 inch",
+        "Gross weight: 19.75 kg / 43.54 lbs",
+        "Battery Specifications",
+        "Battery type: JBL Battery 400, Li-ion 68 Wh (equivalent to 7.2 V / 9444 mAh)",
+        "Battery charge time: 3 hours (speaker off mode)",
+        "Music play time: up to 18 hours (varies by volume level and audio content)"
+      ],
+      whatsInTheBox: [
+        "1 x JBL PartyBox 330",
+        "1 x Quick-start guide",
+        "1 x Safety Instruction and Warranty Card",
+        "AC power cord - quantity and plug type vary by regions"
+      ]
+    };
+
     const descriptions = {
       portables: "With long-lasting battery life and Bluetooth technology, JBL portable wireless speakers are the best way to enjoy your music away from home.",
       partybox: "Liven up the party with JBL's Bluetooth-enabled party speakers featuring a dynamic light show.",
@@ -1905,6 +1989,7 @@
       ],
       partybox: [
         "partybox-130",
+        "partybox-330",
         "partybox-stage-320",
         "partybox-encore-essential-2",
         "partybox-encore-2",
@@ -2187,15 +2272,20 @@
 
     function documentActions(product) {
       const supplementalLabel = supplementalDocuments[product.id];
+      const primary = product.spec
+        ? `<a class="doc-button" href="${product.spec}" target="_blank" rel="noreferrer">Spec sheet</a>`
+        : "";
       const supplemental = supplementalLabel
         ? `<a class="doc-button secondary" href="${product.id}-manual.pdf" target="_blank" rel="noreferrer">${supplementalLabel}</a>`
         : "";
+
+      if (!primary && !supplemental) return "";
 
       return `
         <section class="panel documents">
           <h3>Documents</h3>
           <div class="document-actions">
-            <a class="doc-button" href="${product.spec}" target="_blank" rel="noreferrer">Spec sheet</a>
+            ${primary}
             ${supplemental}
           </div>
         </section>
