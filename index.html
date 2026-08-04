@@ -1652,7 +1652,7 @@
         dealer: 18899.3,
         colors: ["BLK", "WHT"],
         image: "partybox-encore-2-plus.jpg",
-        spec: "partybox-encore-2-plus.pdf"
+        spec: "JBL_PartyBox_Encore_2_Plus_(2mics)_Specsheet_EN.pdf"
       },
       {
         id: "partybox-otg-2",
@@ -1928,6 +1928,18 @@
     };
 
     window.productDetailContent = window.productDetailContent || {};
+    window.productDetailContent["partybox-encore-2-plus"] = {
+      ...(window.productDetailContent["partybox-encore-2-plus"] || {}),
+      whatsInTheBox: [
+        "1 x JBL PartyBox Encore 2 Plus Speaker",
+        "2 x JBL PartyBox Encore 2 Plus wireless mic",
+        "2 x JBL Mic holder",
+        "1 x AC power cable (type varies by different region)",
+        "1 x QSG",
+        "1 x Safety Sheet & Warranty Card"
+      ]
+    };
+
     window.productDetailContent["partybox-330"] = {
       technicalSpecifications: [
         "General Specifications",
