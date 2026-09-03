@@ -534,6 +534,156 @@
       margin-top: 8px;
     }
 
+    .share-product-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 48px;
+      padding: 0 18px;
+      border: 1px solid var(--dealer-orange);
+      border-radius: 8px;
+      background: var(--dealer-orange);
+      color: white;
+      font-family: "Roc Grotesk Black", Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(17, 17, 17, .14);
+    }
+
+    .share-product-button:hover {
+      background: var(--jbl-orange);
+    }
+
+    body.share-modal-open {
+      overflow: hidden;
+    }
+
+    .share-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      background: rgba(17, 17, 17, .72);
+    }
+
+    .share-modal[hidden] {
+      display: none;
+    }
+
+    .share-dialog {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      width: min(940px, 100%);
+      max-height: calc(100vh - 32px);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 24px 72px rgba(0, 0, 0, .34);
+    }
+
+    .share-dialog-header,
+    .share-dialog-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 15px 18px;
+      background: var(--panel);
+    }
+
+    .share-dialog-header {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .share-dialog-header h3 {
+      margin: 0;
+      font-family: "Roc Grotesk Black", Arial, Helvetica, sans-serif;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .share-dialog-close {
+      display: inline-grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--soft-ink);
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .share-preview {
+      display: grid;
+      place-items: center;
+      min-height: 240px;
+      overflow: auto;
+      padding: 18px;
+      background: var(--canvas);
+    }
+
+    .share-preview canvas {
+      display: block;
+      width: min(100%, 820px);
+      height: auto;
+      background: var(--canvas);
+      box-shadow: 0 10px 30px rgba(17, 17, 17, .2);
+    }
+
+    .share-preview-status {
+      color: var(--soft-ink);
+      font-family: "Roc Grotesk Light", Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+    }
+
+    .share-dialog-footer {
+      justify-content: flex-end;
+      border-top: 1px solid var(--line);
+    }
+
+    .share-exit-button,
+    .share-save-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 8px;
+      font-family: "Roc Grotesk Black", Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0;
+      cursor: pointer;
+    }
+
+    .share-exit-button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+    }
+
+    .share-save-button {
+      border: 1px solid var(--dealer-orange);
+      background: var(--dealer-orange);
+      color: white;
+    }
+
+    .share-save-button:disabled {
+      cursor: wait;
+      opacity: .55;
+    }
+
     .specs {
       margin-top: 28px;
     }
@@ -866,6 +1016,13 @@
       .grid { grid-template-columns: 1fr; }
       .prices { grid-template-columns: 1fr; }
       .card { min-height: 0; }
+
+      .share-modal { padding: 8px; }
+      .share-dialog { max-height: calc(100vh - 16px); }
+      .share-preview { padding: 8px; }
+      .share-dialog-footer { align-items: stretch; }
+      .share-exit-button,
+      .share-save-button { flex: 1 1 0; }
     }
   </style>
 </head>
@@ -1440,6 +1597,23 @@
         </div>
       </section>
     </main>
+  </div>
+
+  <div class="share-modal" id="shareProductModal" hidden>
+    <section class="share-dialog" role="dialog" aria-modal="true" aria-labelledby="shareProductTitle">
+      <div class="share-dialog-header">
+        <h3 id="shareProductTitle">Share Product Details</h3>
+        <button class="share-dialog-close" id="closeShareProduct" type="button" aria-label="Close product image preview">&times;</button>
+      </div>
+      <div class="share-preview">
+        <div class="share-preview-status" id="shareProductStatus">Preparing image...</div>
+        <canvas id="shareProductCanvas" width="1600" height="1200" aria-label="Shareable product details image" hidden></canvas>
+      </div>
+      <div class="share-dialog-footer">
+        <button class="share-exit-button" id="exitShareProduct" type="button">Exit</button>
+        <button class="share-save-button" id="saveShareProduct" type="button" disabled>Save PNG</button>
+      </div>
+    </section>
   </div>
 
   <script src="product-variant-galleries.js"></script>
@@ -2198,8 +2372,17 @@
     const utilityTabs = document.querySelectorAll(".utility-tab");
     const announcementsPage = document.querySelector("#announcementsPage");
     const serviceCentersPage = document.querySelector("#serviceCentersPage");
+    const shareProductModal = document.querySelector("#shareProductModal");
+    const shareProductCanvas = document.querySelector("#shareProductCanvas");
+    const shareProductStatus = document.querySelector("#shareProductStatus");
+    const closeShareProductButton = document.querySelector("#closeShareProduct");
+    const exitShareProductButton = document.querySelector("#exitShareProduct");
+    const saveShareProductButton = document.querySelector("#saveShareProduct");
     let activeTab = "portables";
     let activePage = "catalog";
+    let shareReturnFocus = null;
+    let shareDownloadName = "jbl-product-details.png";
+    let shareGeneration = 0;
 
     function productCard(product) {
       return `
@@ -2365,6 +2548,234 @@
       return [product.description, ...(categoryFeatures[product.tab] || [])].filter(Boolean);
     }
 
+    function waitForShareImage(image) {
+      if (image.complete && image.naturalWidth) return Promise.resolve();
+      return new Promise((resolve, reject) => {
+        image.addEventListener("load", resolve, { once: true });
+        image.addEventListener("error", reject, { once: true });
+      });
+    }
+
+    function shareTextLines(context, text, maxWidth) {
+      const lines = [];
+      String(text || "").split(/\n+/).forEach(paragraph => {
+        const words = paragraph.trim().split(/\s+/).filter(Boolean);
+        let line = "";
+        words.forEach(word => {
+          const nextLine = line ? `${line} ${word}` : word;
+          if (line && context.measureText(nextLine).width > maxWidth) {
+            lines.push(line);
+            line = word;
+          } else {
+            line = nextLine;
+          }
+        });
+        if (line) lines.push(line);
+      });
+      return lines.length ? lines : [""];
+    }
+
+    function drawShareTextLines(context, lines, x, y, lineHeight) {
+      lines.forEach((line, index) => context.fillText(line, x, y + index * lineHeight));
+      return y + lines.length * lineHeight;
+    }
+
+    function drawShareRoundedRect(context, x, y, width, height, radius, fill, stroke) {
+      const right = x + width;
+      const bottom = y + height;
+      context.beginPath();
+      context.moveTo(x + radius, y);
+      context.lineTo(right - radius, y);
+      context.quadraticCurveTo(right, y, right, y + radius);
+      context.lineTo(right, bottom - radius);
+      context.quadraticCurveTo(right, bottom, right - radius, bottom);
+      context.lineTo(x + radius, bottom);
+      context.quadraticCurveTo(x, bottom, x, bottom - radius);
+      context.lineTo(x, y + radius);
+      context.quadraticCurveTo(x, y, x + radius, y);
+      context.closePath();
+      if (fill) context.fill();
+      if (stroke) context.stroke();
+    }
+
+    function drawShareProductImage(context, image, x, y, width, height) {
+      const scale = Math.min(width / image.naturalWidth, height / image.naturalHeight);
+      const drawWidth = image.naturalWidth * scale;
+      const drawHeight = image.naturalHeight * scale;
+      const drawX = x + (width - drawWidth) / 2;
+      const drawY = y + (height - drawHeight) / 2;
+      context.save();
+      context.globalCompositeOperation = "multiply";
+      context.drawImage(image, drawX, drawY, drawWidth, drawHeight);
+      context.restore();
+    }
+
+    function shareFileName(product) {
+      const selectedColor = detail.querySelector('.color-option[aria-selected="true"]')?.dataset.color || "";
+      return `${product.name}-${selectedColor}-product-details`
+        .normalize("NFKD")
+        .replace(/[^a-zA-Z0-9]+/g, "-")
+        .replace(/^-|-$/g, "")
+        .toLowerCase() + ".png";
+    }
+
+    async function drawShareProduct(product) {
+      const generation = ++shareGeneration;
+      const mainPhoto = detail.querySelector("#mainPhoto");
+      const logo = document.querySelector(".brand img");
+      if (!mainPhoto || !logo) return;
+
+      shareProductStatus.textContent = "Preparing image...";
+      shareProductStatus.hidden = false;
+      shareProductCanvas.hidden = true;
+      saveShareProductButton.disabled = true;
+      shareDownloadName = shareFileName(product);
+
+      try {
+        await Promise.all([
+          document.fonts?.ready || Promise.resolve(),
+          waitForShareImage(mainPhoto),
+          waitForShareImage(logo)
+        ]);
+        if (generation !== shareGeneration) return;
+
+        const context = shareProductCanvas.getContext("2d");
+        const features = productFeatures(product).map(String).filter(item => item.trim());
+        const titleX = 790;
+        const titleY = 105;
+        const textWidth = 730;
+
+        context.font = '900 62px "Roc Grotesk Black", Arial, Helvetica, sans-serif';
+        const titleLines = shareTextLines(context, product.name.toUpperCase(), textWidth);
+        const titleBottom = titleY + titleLines.length * 58;
+
+        context.font = '300 25px "Roc Grotesk Light", Arial, Helvetica, sans-serif';
+        const descriptionY = titleBottom + 2;
+        const descriptionLines = shareTextLines(context, product.description, textWidth);
+        const descriptionBottom = descriptionY + descriptionLines.length * 34;
+        const featurePanelY = Math.max(245, descriptionBottom + 24);
+
+        context.font = '300 23px "Roc Grotesk Light", Arial, Helvetica, sans-serif';
+        const featureLines = features.map(feature => shareTextLines(context, feature, 625));
+        const featureListHeight = featureLines.reduce((total, lines, index) => {
+          return total + lines.length * 31 + (index < featureLines.length - 1 ? 17 : 0);
+        }, 0);
+        const featurePanelHeight = 120 + featureListHeight + 34;
+        const upperContentBottom = Math.max(840, featurePanelY + featurePanelHeight);
+        const detailsY = upperContentBottom + 45;
+
+        shareProductCanvas.width = 1600;
+        shareProductCanvas.height = detailsY + 315;
+
+        context.fillStyle = "#f4f4f2";
+        context.fillRect(0, 0, shareProductCanvas.width, shareProductCanvas.height);
+
+        const logoWidth = 126;
+        const logoHeight = logoWidth * (logo.naturalHeight / logo.naturalWidth);
+        context.drawImage(logo, 64, 46, logoWidth, logoHeight);
+
+        context.fillStyle = "#111111";
+        context.font = '900 62px "Roc Grotesk Black", Arial, Helvetica, sans-serif';
+        drawShareTextLines(context, titleLines, titleX, titleY, 58);
+        context.fillStyle = "#787878";
+        context.font = '300 25px "Roc Grotesk Light", Arial, Helvetica, sans-serif';
+        drawShareTextLines(context, descriptionLines, titleX, descriptionY, 34);
+
+        context.fillStyle = "#edf1f2";
+        context.strokeStyle = "#dedede";
+        context.lineWidth = 2;
+        context.shadowColor = "rgba(17, 17, 17, .13)";
+        context.shadowBlur = 30;
+        context.shadowOffsetY = 12;
+        drawShareRoundedRect(context, 70, 190, 660, 650, 12, true, true);
+        context.shadowColor = "transparent";
+        context.shadowBlur = 0;
+        context.shadowOffsetY = 0;
+        drawShareProductImage(context, mainPhoto, 120, 245, 560, 560);
+
+        context.fillStyle = "#ffffff";
+        context.strokeStyle = "#dedede";
+        context.shadowColor = "rgba(17, 17, 17, .08)";
+        context.shadowBlur = 24;
+        context.shadowOffsetY = 10;
+        drawShareRoundedRect(context, 780, featurePanelY, 750, featurePanelHeight, 12, true, true);
+        context.shadowColor = "transparent";
+        context.shadowBlur = 0;
+        context.shadowOffsetY = 0;
+
+        context.fillStyle = "#111111";
+        context.font = '900 31px "Roc Grotesk Black", Arial, Helvetica, sans-serif';
+        context.fillText("FEATURES AND BENEFITS", 820, featurePanelY + 65);
+        context.fillStyle = "#555555";
+        context.font = '300 23px "Roc Grotesk Light", Arial, Helvetica, sans-serif';
+        let featureY = featurePanelY + 120;
+        featureLines.forEach((lines, index) => {
+          context.beginPath();
+          context.arc(828, featureY - 7, 4, 0, Math.PI * 2);
+          context.fill();
+          featureY = drawShareTextLines(context, lines, 850, featureY, 31);
+          if (index < featureLines.length - 1) featureY += 17;
+        });
+
+        context.fillStyle = "#ffffff";
+        context.strokeStyle = "#dedede";
+        context.shadowColor = "rgba(17, 17, 17, .08)";
+        context.shadowBlur = 22;
+        context.shadowOffsetY = 8;
+        drawShareRoundedRect(context, 70, detailsY, 1460, 245, 12, true, true);
+        context.shadowColor = "transparent";
+        context.shadowBlur = 0;
+        context.shadowOffsetY = 0;
+
+        context.fillStyle = "#111111";
+        context.font = '900 31px "Roc Grotesk Black", Arial, Helvetica, sans-serif';
+        context.fillText("PRODUCT DETAILS", 100, detailsY + 60);
+
+        context.fillStyle = "#fafafa";
+        context.strokeStyle = "#dedede";
+        drawShareRoundedRect(context, 100, detailsY + 95, 680, 115, 10, true, true);
+        drawShareRoundedRect(context, 800, detailsY + 95, 700, 115, 10, true, true);
+
+        context.fillStyle = "#555555";
+        context.font = '900 18px "Roc Grotesk Black", Arial, Helvetica, sans-serif';
+        context.fillText("SRP", 130, detailsY + 137);
+        context.fillText("DP", 830, detailsY + 137);
+        context.fillStyle = "#111111";
+        context.font = '900 35px "Roc Grotesk Black", Arial, Helvetica, sans-serif';
+        context.fillText(currency.format(product.srp), 130, detailsY + 187);
+        context.fillStyle = "#fa4616";
+        context.fillText(currency.format(product.dealer), 830, detailsY + 187);
+
+        shareProductCanvas.setAttribute("aria-label", `Shareable ${product.name} product details image`);
+        shareProductStatus.hidden = true;
+        shareProductCanvas.hidden = false;
+        saveShareProductButton.disabled = false;
+      } catch (error) {
+        if (generation !== shareGeneration) return;
+        shareProductStatus.textContent = "Unable to prepare the product image.";
+        console.error(error);
+      }
+    }
+
+    function openShareProduct(product) {
+      shareReturnFocus = document.activeElement;
+      shareProductModal.hidden = false;
+      document.body.classList.add("share-modal-open");
+      closeShareProductButton.focus();
+      drawShareProduct(product);
+    }
+
+    function closeShareProduct() {
+      shareGeneration += 1;
+      shareProductModal.hidden = true;
+      document.body.classList.remove("share-modal-open");
+      shareProductCanvas.hidden = true;
+      shareProductStatus.hidden = false;
+      saveShareProductButton.disabled = true;
+      if (shareReturnFocus?.isConnected) shareReturnFocus.focus();
+      shareReturnFocus = null;
+    }
+
     function renderDetail(product) {
       const variants = window.productVariantGalleries?.[product.id] || {};
       const colorKeys = sortColorKeys(product, Object.keys(variants).filter(color => variants[color]?.length));
@@ -2413,6 +2824,7 @@
               <h3>Features and Benefits</h3>
               <ul class="feature-list">${features}</ul>
             </div>
+            <button class="share-product-button" id="shareProductDetails" type="button">Share Product Details</button>
           </div>
         </section>
         <section class="panel specs">
@@ -2434,6 +2846,10 @@
         history.pushState({}, "", location.pathname);
         tabs.forEach(item => item.setAttribute("aria-selected", String(item.dataset.tab === activeTab)));
         render();
+      });
+
+      detail.querySelector("#shareProductDetails").addEventListener("click", () => {
+        openShareProduct(product);
       });
 
       detail.querySelectorAll(".thumb").forEach(thumb => {
@@ -2584,6 +3000,26 @@
         history.pushState({}, "", `${location.pathname}?page=${page}`);
         renderInfoPage(page);
       });
+    });
+
+    closeShareProductButton.addEventListener("click", closeShareProduct);
+    exitShareProductButton.addEventListener("click", closeShareProduct);
+    shareProductModal.addEventListener("click", event => {
+      if (event.target === shareProductModal) closeShareProduct();
+    });
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && !shareProductModal.hidden) closeShareProduct();
+    });
+    saveShareProductButton.addEventListener("click", () => {
+      shareProductCanvas.toBlob(blob => {
+        if (!blob) return;
+        const link = document.createElement("a");
+        const objectUrl = URL.createObjectURL(blob);
+        link.href = objectUrl;
+        link.download = shareDownloadName;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+      }, "image/png");
     });
 
     search.addEventListener("input", render);
