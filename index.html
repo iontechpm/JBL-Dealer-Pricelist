@@ -649,11 +649,22 @@
 
     .share-dialog-footer {
       justify-content: flex-end;
+      flex-wrap: wrap;
       border-top: 1px solid var(--line);
     }
 
+    .share-action-status {
+      flex: 1 1 180px;
+      margin-right: auto;
+      color: var(--soft-ink);
+      font-family: "Roc Grotesk Light", Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+    }
+
     .share-exit-button,
-    .share-save-button {
+    .share-save-button,
+    .share-copy-button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -679,7 +690,14 @@
       color: white;
     }
 
-    .share-save-button:disabled {
+    .share-copy-button {
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: white;
+    }
+
+    .share-save-button:disabled,
+    .share-copy-button:disabled {
       cursor: wait;
       opacity: .55;
     }
@@ -1021,8 +1039,10 @@
       .share-dialog { max-height: calc(100vh - 16px); }
       .share-preview { padding: 8px; }
       .share-dialog-footer { align-items: stretch; }
+      .share-action-status { flex-basis: 100%; margin-right: 0; }
       .share-exit-button,
-      .share-save-button { flex: 1 1 0; }
+      .share-save-button,
+      .share-copy-button { flex: 1 1 100%; }
     }
   </style>
 </head>
@@ -1610,8 +1630,10 @@
         <canvas id="shareProductCanvas" width="1600" height="1200" aria-label="Shareable product details image" hidden></canvas>
       </div>
       <div class="share-dialog-footer">
+        <span class="share-action-status" id="shareActionStatus" role="status" aria-live="polite"></span>
         <button class="share-exit-button" id="exitShareProduct" type="button">Exit</button>
-        <button class="share-save-button" id="saveShareProduct" type="button" disabled>Save PNG</button>
+        <button class="share-save-button" id="saveShareProduct" type="button" disabled>Save as PNG</button>
+        <button class="share-copy-button" id="copyShareProduct" type="button" disabled>Copy to Clipboard</button>
       </div>
     </section>
   </div>
@@ -2378,6 +2400,8 @@
     const closeShareProductButton = document.querySelector("#closeShareProduct");
     const exitShareProductButton = document.querySelector("#exitShareProduct");
     const saveShareProductButton = document.querySelector("#saveShareProduct");
+    const copyShareProductButton = document.querySelector("#copyShareProduct");
+    const shareActionStatus = document.querySelector("#shareActionStatus");
     let activeTab = "portables";
     let activePage = "catalog";
     let shareReturnFocus = null;
@@ -2629,6 +2653,8 @@
       shareProductStatus.hidden = false;
       shareProductCanvas.hidden = true;
       saveShareProductButton.disabled = true;
+      copyShareProductButton.disabled = true;
+      shareActionStatus.textContent = "";
       shareDownloadName = shareFileName(product);
 
       try {
@@ -2750,6 +2776,7 @@
         shareProductStatus.hidden = true;
         shareProductCanvas.hidden = false;
         saveShareProductButton.disabled = false;
+        copyShareProductButton.disabled = false;
       } catch (error) {
         if (generation !== shareGeneration) return;
         shareProductStatus.textContent = "Unable to prepare the product image.";
@@ -2772,8 +2799,22 @@
       shareProductCanvas.hidden = true;
       shareProductStatus.hidden = false;
       saveShareProductButton.disabled = true;
+      copyShareProductButton.disabled = true;
+      shareActionStatus.textContent = "";
       if (shareReturnFocus?.isConnected) shareReturnFocus.focus();
       shareReturnFocus = null;
+    }
+
+    function shareProductBlob() {
+      return new Promise((resolve, reject) => {
+        shareProductCanvas.toBlob(blob => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            reject(new Error("Unable to create PNG image."));
+          }
+        }, "image/png");
+      });
     }
 
     function renderDetail(product) {
@@ -3010,16 +3051,33 @@
     document.addEventListener("keydown", event => {
       if (event.key === "Escape" && !shareProductModal.hidden) closeShareProduct();
     });
-    saveShareProductButton.addEventListener("click", () => {
-      shareProductCanvas.toBlob(blob => {
-        if (!blob) return;
+    saveShareProductButton.addEventListener("click", async () => {
+      try {
+        const blob = await shareProductBlob();
         const link = document.createElement("a");
         const objectUrl = URL.createObjectURL(blob);
         link.href = objectUrl;
         link.download = shareDownloadName;
         link.click();
         setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
-      }, "image/png");
+      } catch (error) {
+        shareActionStatus.textContent = "Unable to save the PNG image.";
+        console.error(error);
+      }
+    });
+    copyShareProductButton.addEventListener("click", async () => {
+      shareActionStatus.textContent = "";
+      try {
+        if (!navigator.clipboard?.write || typeof ClipboardItem === "undefined") {
+          throw new Error("Image clipboard access is unavailable.");
+        }
+        const clipboardItem = new ClipboardItem({ "image/png": shareProductBlob() });
+        await navigator.clipboard.write([clipboardItem]);
+        shareActionStatus.textContent = "Image copied to clipboard.";
+      } catch (error) {
+        shareActionStatus.textContent = "Copy is unavailable here. Use Save as PNG instead.";
+        console.error(error);
+      }
     });
 
     search.addEventListener("input", render);
