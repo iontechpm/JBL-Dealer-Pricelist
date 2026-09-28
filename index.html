@@ -1981,6 +1981,19 @@
         spec: "JBL_Horizon_3_DAB-FM_Specsheet_EN.pdf"
       },
       {
+        id: "pulse-6",
+        tab: "portables",
+        sku: "PULSE 6",
+        name: "JBL Pulse 6",
+        category: "Portables",
+        description: "Portable speaker with JBL legendary sound and a customizable 360° lightshow",
+        srp: 19999,
+        dealer: 13999.3,
+        colors: ["BLK"],
+        image: "JBL_PULSE_6_HERO_015_x4.png",
+        spec: "JBL_Pulse_6_Specsheet_EN.pdf"
+      },
+      {
         id: "bandbox-solo",
         tab: "bandbox",
         sku: "BANDBOX SOLO",
@@ -2278,6 +2291,16 @@
       ]
     };
 
+    window.productVariantGalleries["pulse-6"] = {
+      BLK: [
+        "JBL_PULSE_6_HERO_015_x4.png",
+        "JBL_PULSE_6_3_4_FRONT_0073_x5.png",
+        "JBL_PULSE_6_3_4_BACK_0095_x5.png",
+        "JBL_PULSE_6_DETAIL_1_0103_x2.png",
+        "JBL_PULSE_6_DETAIL_3_0166_x2.png"
+      ]
+    };
+
     window.productDetailContent = window.productDetailContent || {};
     window.productDetailContent["partybox-encore-2-plus"] = {
       ...(window.productDetailContent["partybox-encore-2-plus"] || {}),
@@ -2381,6 +2404,53 @@
         "1 x Pig-tail antenna",
         "1 x Quick start guide",
         "1 x Safety instruction and warranty card"
+      ]
+    };
+
+    window.productDetailContent["pulse-6"] = {
+      features: [
+        "JBL legendary sound",
+        "Captivating choreographed lightshow",
+        "Up to 12 hours of playtime",
+        "Bedside tapping lamp",
+        "Call it a night with Sunset Mode",
+        "Keep playing, rain or shine",
+        "Link up and play with Auracast™",
+        "Pure sound with lossless playback",
+        "Control it your way with the JBL One app",
+        "Made with the planet in mind"
+      ],
+      technicalSpecifications: [
+        "General Specifications",
+        "Rated output power: 30W RMS woofer, 10W RMS tweeter",
+        "Power Input: 5V/3A",
+        "Audio Specifications",
+        "Transducer: Woofer: 63.8mm x 63.8mm / 2.5” x 2.5”",
+        "Tweeter: φ16mm / 0.63”",
+        "Frequency response: 42 Hz – 20 kHz",
+        "Signal-to-noise ratio: > 80dB",
+        "Control and Connection Specifications",
+        "Connection port: USB-C in",
+        "Bluetooth® version: 6.0",
+        "Bluetooth® profile: A2DP 1.4, AVRCP 1.6",
+        "Bluetooth® transmitter frequency range: 2400 MHz - 2483.5 MHz",
+        "Bluetooth® transmitter power: ≤14dBm (EIRP)",
+        "Bluetooth® transmitter modulation: GFSK, π/4 DQPSK, 8DPSK",
+        "Supported formats: SBC, AAC, LC3",
+        "Dimension Specifications",
+        "Product dimensions (W x H x D): 131.73 x 264.05 x 106.4mm / 5.18” x 10.4” x 4.19”",
+        "Net weight: 1.49kg / 3.27Ibs",
+        "Packaging dimensions (W x H x D): 169.5 x 299 x 124.5mm / 6.67” x 11.77” x 4.9”",
+        "Gross weight: 1.99kg / 4.39 Ibs",
+        "Battery Specifications",
+        "Battery type: Li-ion 34 Wh (equivalent to 7.2V / 4722mAh)",
+        "Battery charge time: < 4.5 hours (5V / 3A)",
+        "Music play time: Up to 12 hours (dependent on volume level, audio content and light themes)"
+      ],
+      whatsInTheBox: [
+        "1 x JBL Pulse 6",
+        "1 x Quick start guide",
+        "1 x Warranty card and Safety Sheet"
       ]
     };
 
@@ -2754,6 +2824,7 @@
     const productSortOrder = {
       portables: [
         "horizon-3",
+        "pulse-6",
         "go4-duo",
         "go5",
         "clip5",
